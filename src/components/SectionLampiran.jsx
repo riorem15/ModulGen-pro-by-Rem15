@@ -41,7 +41,7 @@ const SectionLampiran = ({ data, onChange }) => {
           />
         </div>
         
-        <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+        <div className="form-grid-2">
           <div className="form-card" style={{ padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '8px' }}>
             <h4 style={{ marginBottom: '1rem', color: 'var(--navy)' }}>Kepala Sekolah</h4>
             <div className="form-group mb-3">

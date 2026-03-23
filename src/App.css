@@ -164,3 +164,54 @@
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border-color);
 }
+
+/* Responsive Form Grids */
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Responsive Overrides (Mobile/Tablet) */
+@media (max-width: 768px) {
+  .app-header {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .app-header h1 {
+    font-size: 1.25rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .app-header .flex {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+  .btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  .tabs-nav {
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.75rem;
+  }
+  .tab-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  .form-grid-3, .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

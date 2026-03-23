@@ -17,7 +17,6 @@ TIDAK BOLEH ADA ROOT KEY LAIN. KEMBALIKAN OBJECT JSON YANG LANGSUNG BERISI KEY B
 }`;
 
 const MGenAiModal = ({ onClose, onGenerate, currentData }) => {
-  const [apiKey, setApiKey] = useState('');
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loadingDots, setLoadingDots] = useState('');
@@ -27,8 +26,6 @@ const MGenAiModal = ({ onClose, onGenerate, currentData }) => {
   const [attachedFile, setAttachedFile] = useState(null);
 
   useEffect(() => {
-    const savedKey = localStorage.getItem('mgen_api_key');
-    if (savedKey) setApiKey(savedKey);
     const savedModel = localStorage.getItem('mgen_model_type');
     if (savedModel) setModelType(savedModel);
   }, []);
@@ -41,10 +38,8 @@ const MGenAiModal = ({ onClose, onGenerate, currentData }) => {
     return () => clearInterval(timer);
   }, [isLoading]);
 
-  const handleSaveSettings = (k, m) => {
-    setApiKey(k);
+  const handleSaveSettings = (m) => {
     setModelType(m);
-    localStorage.setItem('mgen_api_key', k);
     localStorage.setItem('mgen_model_type', m);
   };
 
@@ -87,21 +82,14 @@ const MGenAiModal = ({ onClose, onGenerate, currentData }) => {
   };
 
   const handleGenerate = async () => {
-    if (!apiKey) {
-      alert("Masukkan API Key Gemini Anda terlebih dahulu.");
-      return;
-    }
     if (!prompt.trim()) {
       alert("Masukkan topik modul yang ingin dibuat.");
       return;
     }
 
     setIsLoading(true);
-    localStorage.setItem('mgen_api_key', apiKey);
 
     try {
-      const actualModelName = modelType === 'pro' ? 'gemini-2.5-pro' : 'gemini-2.5-flash';
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${actualModelName}:generateContent?key=${apiKey}`;
       
       const contextPrompt = `${systemPrompt}
 
@@ -127,10 +115,10 @@ Instruksi Pengguna: ${prompt}`;
         }
       };
 
-      const response = await fetch(url, {
+      const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ modelType, payload })
       });
 
       if (!response.ok) {
@@ -200,27 +188,17 @@ Instruksi Pengguna: ${prompt}`;
 
         {showSettings && (
           <div style={{ padding: '1rem', backgroundColor: '#f1f5f9', borderBottom: '1px solid #cbd5e1' }}>
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Gemini API Key</label>
-              <input 
-                type="password" 
-                value={apiKey}
-                onChange={(e) => handleSaveSettings(e.target.value, modelType)}
-                placeholder="AIzaSy..."
-                style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-              />
-            </div>
             <div>
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Mode Berpikir AI</label>
               <div className="flex gap-2">
                 <button 
-                  onClick={() => handleSaveSettings(apiKey, 'flash')}
+                  onClick={() => handleSaveSettings('flash')}
                   style={{ flex: 1, padding: '0.5rem', borderRadius: '4px', border: modelType === 'flash' ? '2px solid #2B579A' : '1px solid #cbd5e1', backgroundColor: modelType === 'flash' ? '#e0e7ff' : 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
                   <Zap size={16} /> Respon Cepat
                 </button>
                 <button 
-                  onClick={() => handleSaveSettings(apiKey, 'pro')}
+                  onClick={() => handleSaveSettings('pro')}
                   style={{ flex: 1, padding: '0.5rem', borderRadius: '4px', border: modelType === 'pro' ? '2px solid #2B579A' : '1px solid #cbd5e1', backgroundColor: modelType === 'pro' ? '#e0e7ff' : 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
                   <Target size={16} /> Pemikiran Mendalam

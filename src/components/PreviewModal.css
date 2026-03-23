@@ -176,14 +176,14 @@
 /* ==== EXPORT SPECIFIC STYLES ==== */
 /* These map html2canvas width perfectly to jsPDF scaling, ensuring equal margins and no scaling cutoff */
 .is-exporting {
-  width: 170mm !important; /* A4 (210) minus 20mm left and 20mm right margins */
+  width: 155mm !important; /* A4 (210) minus 30mm left and 25mm right margins */
   margin: 0 !important;
   padding: 0 !important;
   background-color: white !important;
 }
 
 .is-exporting .a4-paper {
-  width: 170mm !important;
+  width: 155mm !important;
   min-height: auto !important;
   padding: 0 !important;
   margin: 0 !important;

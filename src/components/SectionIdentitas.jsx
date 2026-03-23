@@ -10,7 +10,7 @@ const SectionIdentitas = ({ data, onChange }) => {
 
       <div className="form-group mb-6" style={{ background: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
         <h3 style={{ fontSize: '1rem', marginBottom: '1rem', color: 'var(--navy)' }}>Pengaturan Format Dokumen</h3>
-        <div className="form-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+        <div className="form-grid-3">
           <div>
             <label style={{ fontSize: '0.85rem' }}>Jenis Huruf (Font)</label>
             <select value={data.fontFamily || 'Poppins'} onChange={(e) => onChange('fontFamily', e.target.value)}>
@@ -42,7 +42,7 @@ const SectionIdentitas = ({ data, onChange }) => {
         </div>
       </div>
 
-      <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+      <div className="form-grid-2">
         <div className="form-group">
           <label>Nama Penyusun</label>
           <input 

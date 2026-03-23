@@ -30,7 +30,7 @@ function App() {
   // Global State for the Module
   const [moduleData, setModuleData] = useState({
     identitas: {
-      penyusun: 'Rio Refki Maulana',
+      penyusun: '',
       instansi: '',
       mataPelajaran: '',
       faseKelas: '',

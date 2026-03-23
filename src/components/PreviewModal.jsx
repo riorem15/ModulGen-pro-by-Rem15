@@ -38,7 +38,7 @@ const PreviewModal = ({ data, onClose }) => {
 
     try {
       const opt = {
-        margin: [20, 20, 20, 20], // 20mm exactly on all sides for equal left/right margins
+        margin: [25, 25, 25, 30], // Top, Right, Bottom, Left in mm
         filename: `Modul_Ajar_${data.identitas.mataPelajaran || 'Modul'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
@@ -56,7 +56,15 @@ const PreviewModal = ({ data, onClose }) => {
       };
       // Short delay to ensure browser repaints the layout change (flex-start) before capturing
       await new Promise(resolve => setTimeout(resolve, 150));
-      await html2pdf().set(opt).from(element).save();
+      await html2pdf().set(opt).from(element).toPdf().get('pdf').then((pdf) => {
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(9);
+          pdf.setTextColor(100);
+          pdf.text('Page ' + i, 30, pdf.internal.pageSize.getHeight() - 15);
+        }
+      }).save();
     } catch (err) {
       console.error('Error generating PDF', err);
       // alert('Gagal membuat PDF.');
@@ -131,11 +139,8 @@ const PreviewModal = ({ data, onClose }) => {
             </tbody>
           </table>
         </div>
-      </div>
 
-      {/* PAGE 2: KOMPONEN INTI */}
-      <div className="a4-paper page-break-after" style={globalStyles}>
-        <div className="doc-section">
+        <div className="doc-section mt-8">
           <h3>II. KOMPONEN INTI</h3>
           <div className="doc-sub-section mb-4">
             <h4>A. Profil Pelajar Pancasila</h4>
@@ -259,11 +264,9 @@ const PreviewModal = ({ data, onClose }) => {
             <tr><td style={{ border: '1px solid black', padding: '10px' }}><strong>Alokasi Waktu</strong></td><td style={{ border: '1px solid black', padding: '10px' }}>{data.identitas.alokasiWaktu}</td></tr>
           </tbody>
         </table>
-      </div>
 
-      {/* PAGE 2 Tabel: KOMPONEN INTI */}
-      <div className="a4-paper page-break-after" style={globalStyles}>
-        <table className="doc-table layout-table table-rpp" style={{ border: '1px solid black', marginBottom: '24px' }}>
+        {/* Tabel: KOMPONEN INTI (Lanjutan) */}
+        <table className="doc-table layout-table table-rpp mt-8" style={{ border: '1px solid black', marginBottom: '24px' }}>
           <tbody>
             <tr><th colSpan="2" style={{ backgroundColor: '#f1f5f9', border: '1px solid black', padding: '10px', textAlign: 'left', fontSize: 'inherit' }}>II. KOMPONEN INTI</th></tr>
             <tr>
