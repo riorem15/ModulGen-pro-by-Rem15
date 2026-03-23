@@ -51,7 +51,7 @@ const PreviewModal = ({ data, onClose }) => {
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { 
           mode: ['css', 'legacy'],
-          avoid: ['tr', 'h3', 'h4', '.doc-sub-section', '.avoid-break', '.layout-table']
+          avoid: ['h3', 'h4', '.avoid-break']
         }
       };
       // Short delay to ensure browser repaints the layout change (flex-start) before capturing
@@ -356,36 +356,36 @@ const PreviewModal = ({ data, onClose }) => {
           <h2 className="flex items-center gap-2">
             <FileText /> Pratinjau Dokumen 
           </h2>
-          <div className="flex gap-4 items-center flex-wrap">
-            <div className="flex items-center gap-2">
-              <span style={{ fontSize: '0.9rem', color: '#64748b' }}>Format Canvas:</span>
+          <div className="flex gap-2 items-center flex-wrap" style={{ width: '100%', justifyContent: 'space-between' }}>
+            <div className="flex items-center gap-2 mb-2 sm:mb-0">
+              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>Format Canvas:</span>
               <select 
                 className="form-control" 
                 value={layoutType} 
                 onChange={(e) => setLayoutType(e.target.value)}
-                style={{ padding: '0.35rem 0.75rem', fontSize: '0.9rem', minWidth: '150px' }}
+                style={{ padding: '0.35rem', fontSize: '0.85rem', minWidth: '130px' }}
               >
                 <option value="kotak">1. Format Kotak</option>
                 <option value="tabel">2. Format Tabel RPP</option>
               </select>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
               <button className="btn btn-primary" onClick={handleDownloadPDF} disabled={isExporting}>
-                {isExporting ? <Loader2 className="animate-spin" size={16}/> : <Download size={16} />} Unduh PDF
+                {isExporting ? <Loader2 className="animate-spin" size={14}/> : <Download size={14} />} PDF
               </button>
               <button className="btn btn-secondary" onClick={handleDownloadWord} disabled={isExporting} style={{ backgroundColor: '#2B579A', color: 'white', borderColor: '#2B579A' }}>
-                {isExporting ? <Loader2 className="animate-spin" size={16}/> : <FileText size={16} />} Unduh Word
+                {isExporting ? <Loader2 className="animate-spin" size={14}/> : <FileText size={14} />} Word
               </button>
-              <button className="btn btn-icon" onClick={onClose} style={{ marginLeft: '0.5rem', background: '#f1f5f9', borderRadius: '50%', padding: '0.5rem' }}>
-                <X size={20} color="#475569" />
+              <button className="btn btn-icon" onClick={onClose} style={{ marginLeft: '0.25rem', background: '#f1f5f9', borderRadius: '50%', padding: '0.35rem 0.5rem' }}>
+                <X size={16} color="#475569" />
               </button>
             </div>
           </div>
         </div>
 
-        <div className="modal-body overflow-y-auto" style={{ backgroundColor: '#e2e8f0', padding: '2rem' }}>
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div ref={printRef} className="print-root" style={{ width: '210mm', backgroundColor: 'transparent' }}>
+        <div className="modal-body" style={{ backgroundColor: '#e2e8f0', padding: '1rem', overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <div style={{ display: 'block', width: '100%', textAlign: 'center' }}>
+            <div ref={printRef} className="print-root" style={{ width: '100%', maxWidth: '210mm', backgroundColor: 'transparent', margin: '0 auto', textAlign: 'left', display: 'block' }}>
               {layoutType === 'kotak' ? renderKotakCanvas() : renderTabelCanvas()}
             </div>
           </div>
