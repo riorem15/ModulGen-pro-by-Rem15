@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Download, FileText, LayoutDashboard, Settings, Moon, Sun, Sparkles, 
-  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, CheckSquare, Award
+  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, CheckSquare, Award,
+  Save, RotateCcw, Check
 } from 'lucide-react';
 import './App.css';
 
@@ -19,12 +20,144 @@ import SectionLampiran from './components/SectionLampiran';
 import PreviewModal from './components/PreviewModal';
 import MGenAiModal from './components/MGenAiModal';
 
+const STORAGE_KEY = 'modulgen_pro_saved_data_v3';
+const FORMAT_KEY = 'modulgen_pro_format_type_v3';
+const TAB_KEY = 'modulgen_pro_active_tab_v3';
+
+const defaultModuleData = {
+  formatType: 'deep_learning',
+  identitas: {
+    penyusun: '',
+    instansi: '',
+    mataPelajaran: '',
+    faseKelas: '',
+    semester: '',
+    materiAjar: '',
+    babSubbab: '',
+    alokasiWaktu: '',
+    fontFamily: 'Poppins',
+    fontSize: '11pt',
+    lineSpacing: '1.5'
+  },
+  identifikasi: {
+    profilLulusan: [
+      "Penalaran Kritis & Pemecahan Masalah",
+      "Kreativitas & Inovasi",
+      "Kolaborasi & Gotong Royong"
+    ],
+    kompetensiAwal: '',
+    pemetaanKebutuhan: ''
+  },
+  desainPembelajaran: {
+    capaianPembelajaran: '',
+    tujuanPembelajaran: '',
+    kktp: '',
+    kategoriKetercapaian: ''
+  },
+  pedagogisDeepLearning: {
+    mindfulLearning: '',
+    meaningfulLearning: '',
+    joyfulLearning: '',
+    modelPembelajaran: 'Problem Based Learning (PBL) terintegrasi Deep Learning Cycle',
+    metodePembelajaran: 'Diskusi kelompok kolaboratif, eksplorasi penyelidikan, dan refleksi bermakna'
+  },
+  mediaSarana: {
+    mediaPembelajaran: '',
+    saranaPrasarana: ''
+  },
+  pemahamanPemantik: {
+    pemahamanBermakna: '',
+    pertanyaanPemantik: ''
+  },
+  inti: {
+    profilPancasila: [],
+    modelPembelajaran: '',
+    metodePembelajaran: '',
+    mediaSaranaPrasarana: '',
+    capaianPembelajaran: '',
+    tujuanPembelajaran: '',
+    pemahamanBermakna: '',
+    pertanyaanPemantik: ''
+  },
+  materiReferensi: {
+    materi: '',
+    referensi: ''
+  },
+  langkah: {
+    pendahuluan: { kegiatan: '', durasi: '15' },
+    inti: { kegiatan: '', durasi: '60' },
+    penutup: { kegiatan: '', durasi: '15' },
+  },
+  lampiran: {
+    lkpd: '',
+    asesmen: '',
+    kepalaSekolahNama: '',
+    kepalaSekolahNip: '',
+    guruMapelNama: '',
+    guruMapelNip: '',
+    tanggalPengesahan: 'Serang, 20 Maret 2026'
+  }
+};
+
 function App() {
-  const [formatType, setFormatType] = useState('deep_learning'); // 'deep_learning' or 'standar'
-  const [activeTab, setActiveTab] = useState('identitas');
+  // Format state initialized from localStorage
+  const [formatType, setFormatType] = useState(() => {
+    return localStorage.getItem(FORMAT_KEY) || 'deep_learning';
+  });
+
+  // Active tab initialized from localStorage
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem(TAB_KEY) || 'identitas';
+  });
+
   const [showPreview, setShowPreview] = useState(false);
   const [showMGenAi, setShowMGenAi] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [lastSavedTime, setLastSavedTime] = useState(null);
+
+  // Global State for the Module with LocalStorage Auto-Recovery
+  const [moduleData, setModuleData] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...defaultModuleData,
+          ...parsed,
+          identitas: { ...defaultModuleData.identitas, ...parsed.identitas },
+          identifikasi: { ...defaultModuleData.identifikasi, ...parsed.identifikasi },
+          desainPembelajaran: { ...defaultModuleData.desainPembelajaran, ...parsed.desainPembelajaran },
+          pedagogisDeepLearning: { ...defaultModuleData.pedagogisDeepLearning, ...parsed.pedagogisDeepLearning },
+          mediaSarana: { ...defaultModuleData.mediaSarana, ...parsed.mediaSarana },
+          pemahamanPemantik: { ...defaultModuleData.pemahamanPemantik, ...parsed.pemahamanPemantik },
+          inti: { ...defaultModuleData.inti, ...parsed.inti },
+          materiReferensi: { ...defaultModuleData.materiReferensi, ...parsed.materiReferensi },
+          langkah: {
+            pendahuluan: { ...defaultModuleData.langkah.pendahuluan, ...parsed.langkah?.pendahuluan },
+            inti: { ...defaultModuleData.langkah.inti, ...parsed.langkah?.inti },
+            penutup: { ...defaultModuleData.langkah.penutup, ...parsed.langkah?.penutup }
+          },
+          lampiran: { ...defaultModuleData.lampiran, ...parsed.lampiran }
+        };
+      }
+    } catch (err) {
+      console.error("Gagal memulihkan data dari localStorage:", err);
+    }
+    return defaultModuleData;
+  });
+
+  // Auto-Save Effect whenever data, format, or tab changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(moduleData));
+      localStorage.setItem(FORMAT_KEY, formatType);
+      localStorage.setItem(TAB_KEY, activeTab);
+      const timeStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      setLastSavedTime(timeStr);
+    } catch (err) {
+      console.error("Gagal menyimpan ke localStorage:", err);
+    }
+  }, [moduleData, formatType, activeTab]);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -35,91 +168,6 @@ function App() {
     }
   };
 
-  // Global State for the Module
-  const [moduleData, setModuleData] = useState({
-    formatType: 'deep_learning',
-    identitas: {
-      penyusun: '',
-      instansi: '',
-      mataPelajaran: '',
-      faseKelas: '',
-      semester: '',
-      materiAjar: '',
-      babSubbab: '',
-      alokasiWaktu: '',
-      fontFamily: 'Poppins',
-      fontSize: '11pt',
-      lineSpacing: '1.5'
-    },
-    // 2. IDENTIFIKASI (Deep Learning)
-    identifikasi: {
-      profilLulusan: [
-        "Penalaran Kritis & Pemecahan Masalah",
-        "Kreativitas & Inovasi",
-        "Kolaborasi & Gotong Royong"
-      ],
-      kompetensiAwal: '',
-      pemetaanKebutuhan: ''
-    },
-    // 3. DESAIN PEMBELAJARAN (Deep Learning)
-    desainPembelajaran: {
-      capaianPembelajaran: '',
-      tujuanPembelajaran: '',
-      kktp: '',
-      kategoriKetercapaian: ''
-    },
-    // 4. PRAKTIK PEDAGOGIS DEEP LEARNING
-    pedagogisDeepLearning: {
-      mindfulLearning: '',
-      meaningfulLearning: '',
-      joyfulLearning: '',
-      modelPembelajaran: 'Problem Based Learning (PBL) terintegrasi Deep Learning Cycle',
-      metodePembelajaran: 'Diskusi kelompok kolaboratif, eksplorasi penyelidikan, dan refleksi bermakna'
-    },
-    // 5 & 6. MEDIA, SARANA & PRASARANA
-    mediaSarana: {
-      mediaPembelajaran: '',
-      saranaPrasarana: ''
-    },
-    // 7 & 8. PEMAHAMAN BERMAKNA & PERTANYAAN PEMANTIK
-    pemahamanPemantik: {
-      pemahamanBermakna: '',
-      pertanyaanPemantik: ''
-    },
-    // Standard Komponen Inti (untuk kompatibilitas format standar)
-    inti: {
-      profilPancasila: [],
-      modelPembelajaran: '',
-      metodePembelajaran: '',
-      mediaSaranaPrasarana: '',
-      capaianPembelajaran: '',
-      tujuanPembelajaran: '',
-      pemahamanBermakna: '',
-      pertanyaanPemantik: ''
-    },
-    // 9. MATERI DAN REFERENSI
-    materiReferensi: {
-      materi: '',
-      referensi: ''
-    },
-    // 10. LANGKAH-LANGKAH PEMBELAJARAN
-    langkah: {
-      pendahuluan: { kegiatan: '', durasi: '15' },
-      inti: { kegiatan: '', durasi: '60' },
-      penutup: { kegiatan: '', durasi: '15' },
-    },
-    // LAMPIRAN & PENGESAHAN
-    lampiran: {
-      lkpd: '',
-      asesmen: '',
-      kepalaSekolahNama: '',
-      kepalaSekolahNip: '',
-      guruMapelNama: '',
-      guruMapelNip: '',
-      tanggalPengesahan: 'Serang, 20 Maret 2026'
-    }
-  });
-
   const handleUpdateData = (section, field, value) => {
     setModuleData(prev => {
       const updatedSection = {
@@ -127,12 +175,12 @@ function App() {
         [field]: value
       };
 
-      // Two-way sync between Deep Learning and Standard fields for convenience
       const updated = {
         ...prev,
         [section]: updatedSection
       };
 
+      // Two-way sync between Deep Learning and Standard fields for convenience
       if (section === 'desainPembelajaran') {
         if (field === 'capaianPembelajaran') updated.inti = { ...prev.inti, capaianPembelajaran: value };
         if (field === 'tujuanPembelajaran') updated.inti = { ...prev.inti, tujuanPembelajaran: value };
@@ -159,10 +207,19 @@ function App() {
   const handleFormatChange = (newFormat) => {
     setFormatType(newFormat);
     setModuleData(prev => ({ ...prev, formatType: newFormat }));
-    // If current active tab is not in the new format list, reset to 'identitas'
     const newTabs = getTabsForFormat(newFormat);
     if (!newTabs.some(t => t.id === activeTab)) {
       setActiveTab('identitas');
+    }
+  };
+
+  const handleResetModule = () => {
+    if (window.confirm("Apakah Anda yakin ingin memulai modul baru dari awal? Data teks yang sedang aktif akan direset.")) {
+      setModuleData(defaultModuleData);
+      setActiveTab('identitas');
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(TAB_KEY);
+      setLastSavedTime(null);
     }
   };
 
@@ -251,9 +308,22 @@ function App() {
           <span className="format-badge-header">
             {formatType === 'deep_learning' ? '⚡ Deep Learning Mode' : '📄 Standar Merdeka'}
           </span>
+          {lastSavedTime && (
+            <span className="save-badge-indicator" title="Data modul tersimpan otomatis di browser">
+              <Check size={12} color="#86efac" /> Tersimpan {lastSavedTime}
+            </span>
+          )}
         </div>
 
         <div className="flex gap-2 items-center flex-wrap">
+          <button 
+            className="btn btn-secondary" 
+            onClick={handleResetModule}
+            style={{ padding: '0.45rem 0.75rem', fontSize: '0.8rem', backgroundColor: 'transparent', borderColor: 'rgba(255,255,255,0.25)', color: 'var(--white)' }}
+            title="Reset & Buat Modul Baru"
+          >
+            <RotateCcw size={14} /> Buat Baru
+          </button>
           <button 
             className="btn btn-magic" 
             onClick={() => setShowMGenAi(true)} 
@@ -272,30 +342,8 @@ function App() {
 
       <main className="main-content">
         <div className="card" style={{ padding: '1.75rem' }}>
-          {/* Format Switcher Bar */}
-          <div className="format-bar-top mb-4">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>Format Kerangka Modul:</span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleFormatChange('deep_learning')}
-                  className={`format-toggle-btn ${formatType === 'deep_learning' ? 'active' : ''}`}
-                >
-                  <Sparkles size={15} /> Modul Deep Learning (10 Kerangka Lengkap)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleFormatChange('standar')}
-                  className={`format-toggle-btn ${formatType === 'standar' ? 'active' : ''}`}
-                >
-                  <BookOpen size={15} /> Modul Kurikulum Merdeka (Standar)
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Tab Navigation */}
+          
+          {/* Tab Navigation (Directly at top of card, clean & sleek) */}
           <div className="tabs-nav">
             {tabs.map(tab => (
               <button

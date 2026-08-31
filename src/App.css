@@ -38,6 +38,19 @@
   font-weight: 500;
 }
 
+.save-badge-indicator {
+  background: rgba(16, 185, 129, 0.18);
+  color: #a7f3d0;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .main-content {
   flex: 1;
   padding: 2rem;
