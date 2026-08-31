@@ -610,59 +610,53 @@ const PreviewModal = ({ data, onClose }) => {
   );
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <div className="modal-header" style={{ flexWrap: 'wrap', gap: '0.75rem' }}>
+    <div className="modal-overlay preview-overlay">
+      <div className="modal-content preview-modal-content">
+        {/* Top Header */}
+        <div className="modal-header preview-header-top">
           <div className="flex items-center gap-2">
-            <FileText size={22} color={currentTheme.primary} />
-            <h2 style={{ margin: 0, fontSize: '1.15rem' }}>
-              Pratinjau Dokumen Modul Ajar
+            <FileText size={20} color={currentTheme.primary} />
+            <h2 className="preview-modal-title">
+              Pratinjau Modul Ajar
             </h2>
-            <span className="format-badge-header" style={{ fontSize: '0.75rem', padding: '2px 8px' }}>
-              {isDeepLearning ? 'Deep Learning Format' : 'Standard Format'}
-            </span>
           </div>
+          <button className="btn btn-icon preview-close-btn" onClick={onClose} title="Tutup">
+            <X size={18} color="#475569" />
+          </button>
+        </div>
 
-          <div className="flex gap-2 items-center flex-wrap" style={{ width: '100%', justifyContent: 'space-between' }}>
-            {/* Format Layout & Color Theme Selectors */}
-            <div className="flex items-center gap-3 flex-wrap">
-              {/* Layout Dropdown */}
-              <div className="flex items-center gap-1.5">
-                <LayoutTemplate size={15} color="#64748b" />
-                <select 
-                  className="form-control" 
-                  value={layoutType} 
-                  onChange={(e) => setLayoutType(e.target.value)}
-                  style={{ padding: '0.35rem 0.6rem', fontSize: '0.85rem', minWidth: '150px' }}
-                >
-                  <option value="kotak">1. Format Kotak Modern</option>
-                  <option value="tabel">2. Format Tabel Matriks RPP</option>
-                </select>
-              </div>
+        {/* Toolbar Controls Bar */}
+        <div className="preview-toolbar-bar">
+          <div className="preview-controls-row">
+            {/* Layout Dropdown */}
+            <div className="preview-control-item">
+              <label className="preview-control-label">
+                <LayoutTemplate size={13} /> Layout:
+              </label>
+              <select 
+                className="preview-select" 
+                value={layoutType} 
+                onChange={(e) => setLayoutType(e.target.value)}
+              >
+                <option value="kotak">Format Kotak Modern</option>
+                <option value="tabel">Format Tabel Matriks RPP</option>
+              </select>
+            </div>
 
-              {/* Theme Color Picker Swatches */}
-              <div className="theme-selector-bar">
-                <Palette size={14} color="#64748b" />
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569' }}>Tema Warna:</span>
-                <div className="flex gap-1.5 items-center">
-                  {colorThemes.map(theme => (
-                    <button
-                      key={theme.id}
-                      type="button"
-                      onClick={() => setSelectedThemeId(theme.id)}
-                      className={`theme-color-btn ${selectedThemeId === theme.id ? 'active' : ''}`}
-                      style={{
-                        backgroundColor: theme.primary,
-                        '--active-color': theme.primary
-                      }}
-                      title={theme.name}
-                    />
-                  ))}
-                </div>
+            {/* Single Compact Theme Dropdown */}
+            <div className="preview-control-item">
+              <label className="preview-control-label">
+                <Palette size={13} /> Tema:
+              </label>
+              <div className="theme-single-picker">
+                <span 
+                  className="theme-single-dot" 
+                  style={{ backgroundColor: currentTheme.primary }} 
+                />
                 <select 
                   value={selectedThemeId} 
                   onChange={(e) => setSelectedThemeId(e.target.value)}
-                  style={{ padding: '0.2rem 0.4rem', fontSize: '0.8rem', border: 'none', background: 'transparent', fontWeight: 500, color: currentTheme.primary, cursor: 'pointer' }}
+                  className="preview-select theme-select"
                 >
                   {colorThemes.map(t => (
                     <option key={t.id} value={t.id}>{t.name}</option>
@@ -670,24 +664,31 @@ const PreviewModal = ({ data, onClose }) => {
                 </select>
               </div>
             </div>
+          </div>
 
-            {/* Export Action Buttons */}
-            <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
-              <button className="btn btn-primary" onClick={handleDownloadPDF} disabled={isExporting} style={{ backgroundColor: currentTheme.primary, borderColor: currentTheme.primary }}>
-                {isExporting ? <Loader2 className="animate-spin" size={14}/> : <Download size={14} />} Unduh PDF
-              </button>
-              <button className="btn btn-secondary" onClick={handleDownloadWord} disabled={isExporting} style={{ backgroundColor: '#2B579A', color: 'white', borderColor: '#2B579A' }}>
-                {isExporting ? <Loader2 className="animate-spin" size={14}/> : <FileText size={14} />} Unduh Word (.doc)
-              </button>
-              <button className="btn btn-icon" onClick={onClose} style={{ marginLeft: '0.25rem', background: '#f1f5f9', borderRadius: '50%', padding: '0.35rem 0.5rem' }} title="Tutup">
-                <X size={16} color="#475569" />
-              </button>
-            </div>
+          {/* Export Action Buttons */}
+          <div className="preview-actions-row">
+            <button 
+              className="btn btn-primary preview-btn-export" 
+              onClick={handleDownloadPDF} 
+              disabled={isExporting} 
+              style={{ backgroundColor: currentTheme.primary, borderColor: currentTheme.primary }}
+            >
+              {isExporting ? <Loader2 className="animate-spin" size={14}/> : <Download size={14} />} Unduh PDF
+            </button>
+            <button 
+              className="btn btn-secondary preview-btn-export" 
+              onClick={handleDownloadWord} 
+              disabled={isExporting} 
+              style={{ backgroundColor: '#2B579A', color: 'white', borderColor: '#2B579A' }}
+            >
+              {isExporting ? <Loader2 className="animate-spin" size={14}/> : <FileText size={14} />} Unduh Word (.doc)
+            </button>
           </div>
         </div>
 
-        <div className="modal-body" style={{ backgroundColor: '#cbd5e1', padding: '1.25rem', overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
-          <div style={{ display: 'block', width: '100%', textAlign: 'center' }}>
+        <div className="modal-body preview-modal-body">
+          <div className="preview-sheet-wrapper">
             <div ref={printRef} className="print-root" style={{ width: '100%', maxWidth: '210mm', backgroundColor: 'transparent', margin: '0 auto', textAlign: 'left', display: 'block' }}>
               {layoutType === 'kotak' ? renderKotakCanvas() : renderTabelCanvas()}
             </div>

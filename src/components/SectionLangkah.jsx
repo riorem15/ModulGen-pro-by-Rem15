@@ -15,38 +15,37 @@ const SectionLangkah = ({ data, onChange }) => {
       <div className="section-header">
         <div className="flex items-center gap-2">
           <span className="badge-step">10</span>
-          <h2>LANGKAH-LANGKAH PEMBELAJARAN (DEEP LEARNING)</h2>
+          <h2>10. LANGKAH-LANGKAH PEMBELAJARAN</h2>
         </div>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
           Susun skenario kegiatan pembelajaran yang mengintegrasikan pilar <em>Mindful</em>, <em>Meaningful</em>, dan <em>Joyful</em> dalam alur pendahuluan, inti, dan penutup.
         </p>
       </div>
 
       {/* 1. Pendahuluan */}
-      <div className="card shadow-sm mb-5" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-        <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <PlayCircle size={20} color="#2563EB" />
-            <h3 style={{ fontSize: '1.1rem', color: '#1E293B', margin: 0 }}>
+      <div className="card shadow-sm mb-5" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1.25rem' }}>
+        <div className="step-phase-header mb-3">
+          <div className="step-phase-title-row">
+            <PlayCircle size={20} color="#2563EB" style={{ flexShrink: 0 }} />
+            <h3 style={{ fontSize: '1.05rem', color: '#1E293B', margin: 0, fontWeight: 600 }}>
               1. Kegiatan Pendahuluan (Mindful & Orientasi Pemantik)
             </h3>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock size={16} color="#64748B" />
-            <label className="text-sm font-medium" style={{ margin: 0 }}>Durasi:</label>
-            <div className="flex items-center gap-1">
-              <input 
-                type="number" 
-                style={{ width: '70px', padding: '0.25rem 0.5rem', textAlign: 'center' }} 
-                value={data.pendahuluan.durasi || '15'} 
-                onChange={(e) => handleChange('pendahuluan', 'durasi', e.target.value)}
-                placeholder="15"
-              />
-              <span className="text-sm text-muted">Menit</span>
-            </div>
+          <div className="step-duration-badge">
+            <Clock size={15} color="#2563EB" />
+            <label style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: '#334155' }}>Durasi:</label>
+            <input 
+              type="number" 
+              className="step-duration-input"
+              value={data.pendahuluan.durasi || '15'} 
+              onChange={(e) => handleChange('pendahuluan', 'durasi', e.target.value)}
+              placeholder="15"
+            />
+            <span style={{ fontSize: '0.8rem', color: '#64748B' }}>Menit</span>
           </div>
         </div>
-        <p className="text-xs text-muted mb-2">
+
+        <p className="text-xs mb-2" style={{ color: '#64748B', lineHeight: '1.4' }}>
           💡 <em>Tips Deep Learning:</em> Sertakan salam hangat, doa & hening sadar (Mindful check-in), presensi, apersepsi kontekstual, penyampaian tujuan pembelajaran, dan pertanyaan pemantik awal.
         </p>
         <Editor 
@@ -57,30 +56,30 @@ const SectionLangkah = ({ data, onChange }) => {
       </div>
 
       {/* 2. Kegiatan Inti */}
-      <div className="card shadow-sm mb-5" style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}>
-        <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <Award size={20} color="#059669" />
-            <h3 style={{ fontSize: '1.1rem', color: '#065F46', margin: 0 }}>
+      <div className="card shadow-sm mb-5" style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0', padding: '1.25rem' }}>
+        <div className="step-phase-header mb-3">
+          <div className="step-phase-title-row">
+            <Award size={20} color="#059669" style={{ flexShrink: 0 }} />
+            <h3 style={{ fontSize: '1.05rem', color: '#065F46', margin: 0, fontWeight: 600 }}>
               2. Kegiatan Inti (Sintaks Deep Learning: Memahami, Mengaplikasi, Merefleksi)
             </h3>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock size={16} color="#059669" />
-            <label className="text-sm font-medium" style={{ color: '#065F46', margin: 0 }}>Durasi:</label>
-            <div className="flex items-center gap-1">
-              <input 
-                type="number" 
-                style={{ width: '70px', padding: '0.25rem 0.5rem', borderColor: '#86EFAC', textAlign: 'center' }} 
-                value={data.inti.durasi || '60'} 
-                onChange={(e) => handleChange('inti', 'durasi', e.target.value)}
-                placeholder="60"
-              />
-              <span className="text-sm text-muted">Menit</span>
-            </div>
+          <div className="step-duration-badge" style={{ borderColor: '#86EFAC', background: '#FFFFFF' }}>
+            <Clock size={15} color="#059669" />
+            <label style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: '#065F46' }}>Durasi:</label>
+            <input 
+              type="number" 
+              className="step-duration-input"
+              style={{ borderColor: '#86EFAC' }}
+              value={data.inti.durasi || '60'} 
+              onChange={(e) => handleChange('inti', 'durasi', e.target.value)}
+              placeholder="60"
+            />
+            <span style={{ fontSize: '0.8rem', color: '#047857' }}>Menit</span>
           </div>
         </div>
-        <p className="text-xs text-muted mb-2">
+
+        <p className="text-xs mb-2" style={{ color: '#065F46', opacity: 0.85, lineHeight: '1.4' }}>
           💡 <em>Tips Deep Learning:</em> Alur aktivitas mendalam berorientasi pada pemahaman konsep (Meaningful), kolaborasi kelompok berdiferensiasi, eksplorasi penyelidikan aktif, dan unjuk kreasi yang menyenangkan (Joyful).
         </p>
         <Editor 
@@ -91,30 +90,30 @@ const SectionLangkah = ({ data, onChange }) => {
       </div>
 
       {/* 3. Kegiatan Penutup */}
-      <div className="card shadow-sm" style={{ backgroundColor: '#FFF7ED', border: '1px solid #FED7AA' }}>
-        <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 size={20} color="#EA580C" />
-            <h3 style={{ fontSize: '1.1rem', color: '#9A3412', margin: 0 }}>
+      <div className="card shadow-sm" style={{ backgroundColor: '#FFF7ED', border: '1px solid #FED7AA', padding: '1.25rem' }}>
+        <div className="step-phase-header mb-3">
+          <div className="step-phase-title-row">
+            <CheckCircle2 size={20} color="#EA580C" style={{ flexShrink: 0 }} />
+            <h3 style={{ fontSize: '1.05rem', color: '#9A3412', margin: 0, fontWeight: 600 }}>
               3. Kegiatan Penutup (Refleksi Bermakna, Apresiasi & Tindak Lanjut)
             </h3>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock size={16} color="#EA580C" />
-            <label className="text-sm font-medium" style={{ color: '#9A3412', margin: 0 }}>Durasi:</label>
-            <div className="flex items-center gap-1">
-              <input 
-                type="number" 
-                style={{ width: '70px', padding: '0.25rem 0.5rem', borderColor: '#FDBA74', textAlign: 'center' }} 
-                value={data.penutup.durasi || '15'} 
-                onChange={(e) => handleChange('penutup', 'durasi', e.target.value)}
-                placeholder="15"
-              />
-              <span className="text-sm text-muted">Menit</span>
-            </div>
+          <div className="step-duration-badge" style={{ borderColor: '#FDBA74', background: '#FFFFFF' }}>
+            <Clock size={15} color="#EA580C" />
+            <label style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: '#9A3412' }}>Durasi:</label>
+            <input 
+              type="number" 
+              className="step-duration-input"
+              style={{ borderColor: '#FDBA74' }}
+              value={data.penutup.durasi || '15'} 
+              onChange={(e) => handleChange('penutup', 'durasi', e.target.value)}
+              placeholder="15"
+            />
+            <span style={{ fontSize: '0.8rem', color: '#C2410C' }}>Menit</span>
           </div>
         </div>
-        <p className="text-xs text-muted mb-2">
+
+        <p className="text-xs mb-2" style={{ color: '#9A3412', opacity: 0.85, lineHeight: '1.4' }}>
           💡 <em>Tips Deep Learning:</em> Ajak siswa merefleksikan proses belajar (metakognisi), merangkum kesimpulan bersama, memberikan apresiasi atas keterlibatan seluruh murid, dan menyampaikan rencana pertemuan berikutnya.
         </p>
         <Editor 
