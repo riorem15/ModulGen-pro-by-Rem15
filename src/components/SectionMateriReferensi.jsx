@@ -8,24 +8,24 @@ const SectionMateriReferensi = ({ data, onChange, topic, fase }) => {
       <div className="section-header">
         <div className="flex items-center gap-2">
           <span className="badge-step">9</span>
-          <h2>MATERI PEMBELAJARAN DAN REFERENSI</h2>
+          <h2>9. MATERI PEMBELAJARAN DAN REFERENSI</h2>
         </div>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Uraikan ringkasan materi pembelajaran inti secara konseptual dan cantumkan daftar pustaka/sumber referensi yang kredibel.
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+          Uraian ringkasan materi inti dan daftar referensi pustaka.
         </p>
       </div>
 
       <div className="editor-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <BookOpen size={18} color="#2563EB" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
-            A. Materi Pembelajaran (Ringkasan & Peta Konsep)
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            A. Materi Pembelajaran (Ringkasan & Konsep Kunci)
           </label>
         </div>
         <Editor 
           value={data?.materi || ''} 
           onChange={(val) => onChange('materi', val)} 
-          placeholder="Tuliskan ringkasan materi pembelajaran mendalam, konsep kunci, definisi, atau tabel penjelasan di sini..."
+          placeholder="Tuliskan ringkasan konsep materi pembelajaran di sini..."
           topic={topic}
           fase={fase}
         />
@@ -34,14 +34,14 @@ const SectionMateriReferensi = ({ data, onChange, topic, fase }) => {
       <div className="editor-group">
         <div className="flex items-center gap-2 mb-2">
           <BookmarkCheck size={18} color="#059669" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
-            B. Referensi / Sumber Belajar / Daftar Pustaka
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            B. Referensi & Daftar Pustaka
           </label>
         </div>
         <Editor 
           value={data?.referensi || ''} 
           onChange={(val) => onChange('referensi', val)} 
-          placeholder="Tuliskan daftar buku teks utama, modul kemdikbud, jurnal ilmiah, website terpercaya, atau media digital referensi..."
+          placeholder="Tuliskan sumber buku teks, jurnal, modul, atau website referensi..."
         />
       </div>
     </div>

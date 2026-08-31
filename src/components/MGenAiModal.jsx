@@ -387,10 +387,10 @@ Instruksi Pengguna: ${prompt}`;
         </div>
 
         {/* Mode Berpikir AI Bar */}
-        <div style={{ padding: '0.85rem 1.75rem', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ padding: '0.85rem 1.75rem', backgroundColor: 'var(--bg-card-inner)', borderBottom: '1px solid var(--border-color)' }}>
           <div className="flex justify-between items-center mb-1.5">
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#334155', margin: 0 }}>Mode Berpikir AI</label>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', background: '#e2e8f0', padding: '2px 8px', borderRadius: '12px' }}>Akun Gratis Aktif</span>
+            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Mode Berpikir AI</label>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', background: 'var(--border-color)', padding: '2px 8px', borderRadius: '12px' }}>Akun Gratis Aktif</span>
           </div>
 
           <div className="flex gap-2">
@@ -402,9 +402,9 @@ Instruksi Pengguna: ${prompt}`;
                 flex: 1,
                 padding: '0.55rem 0.75rem',
                 borderRadius: '6px',
-                border: '2px solid #2B579A',
-                backgroundColor: '#EFF6FF',
-                color: '#1E40AF',
+                border: '2px solid var(--accent)',
+                backgroundColor: 'rgba(37, 99, 235, 0.12)',
+                color: 'var(--accent)',
                 fontWeight: '600',
                 cursor: 'pointer',
                 display: 'flex',
@@ -414,7 +414,7 @@ Instruksi Pengguna: ${prompt}`;
                 fontSize: '0.9rem'
               }}
             >
-              <Zap size={16} color="#2563EB" /> Respon Cepat
+              <Zap size={16} color="var(--accent)" /> Respon Cepat
             </button>
 
             {/* Mode Mendalam (Locked for PRO) */}
@@ -425,9 +425,9 @@ Instruksi Pengguna: ${prompt}`;
                 flex: 1,
                 padding: '0.55rem 0.75rem',
                 borderRadius: '6px',
-                border: '1px dashed #94A3B8',
-                backgroundColor: '#F1F5F9',
-                color: '#64748B',
+                border: '1px dashed var(--border-color)',
+                backgroundColor: 'var(--bg-input)',
+                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -438,7 +438,7 @@ Instruksi Pengguna: ${prompt}`;
               }}
               title="Fitur Khusus Pengguna PRO"
             >
-              <Target size={16} color="#64748B" />
+              <Target size={16} color="var(--text-muted)" />
               <span>Pemikiran Mendalam</span>
               <span style={{
                 background: 'linear-gradient(135deg, #F59E0B, #D97706)',
@@ -458,11 +458,11 @@ Instruksi Pengguna: ${prompt}`;
         </div>
 
         {/* Modal Body */}
-        <div className="modal-body" style={{ padding: '1.5rem 1.75rem', display: 'flex', flexDirection: 'column', gap: '1.2rem', backgroundColor: 'white' }}>
+        <div className="modal-body" style={{ padding: '1.5rem 1.75rem', display: 'flex', flexDirection: 'column', gap: '1.2rem', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
           
           {/* Format Pilihan */}
           <div>
-            <label style={{ fontWeight: 'bold', color: '#334155', display: 'block', marginBottom: '0.4rem', fontSize: '0.9rem' }}>Format Modul Sasaran</label>
+            <label style={{ fontWeight: 'bold', color: 'var(--text-primary)', display: 'block', marginBottom: '0.4rem', fontSize: '0.9rem' }}>Format Modul Sasaran</label>
             <div className="flex gap-2">
               <button
                 type="button"
@@ -471,9 +471,9 @@ Instruksi Pengguna: ${prompt}`;
                   flex: 1,
                   padding: '0.5rem 0.75rem',
                   borderRadius: '6px',
-                  border: targetFormat === 'deep_learning' ? '2px solid #2563EB' : '1px solid #cbd5e1',
-                  backgroundColor: targetFormat === 'deep_learning' ? '#EFF6FF' : '#F8FAFC',
-                  color: targetFormat === 'deep_learning' ? '#1D4ED8' : '#64748B',
+                  border: targetFormat === 'deep_learning' ? '2px solid var(--accent)' : '1px solid var(--border-color)',
+                  backgroundColor: targetFormat === 'deep_learning' ? 'rgba(37, 99, 235, 0.12)' : 'var(--bg-card-inner)',
+                  color: targetFormat === 'deep_learning' ? 'var(--accent)' : 'var(--text-secondary)',
                   fontWeight: targetFormat === 'deep_learning' ? '600' : 'normal',
                   fontSize: '0.85rem',
                   cursor: 'pointer',
@@ -492,9 +492,9 @@ Instruksi Pengguna: ${prompt}`;
                   flex: 1,
                   padding: '0.5rem 0.75rem',
                   borderRadius: '6px',
-                  border: targetFormat === 'standar' ? '2px solid #2563EB' : '1px solid #cbd5e1',
-                  backgroundColor: targetFormat === 'standar' ? '#EFF6FF' : '#F8FAFC',
-                  color: targetFormat === 'standar' ? '#1D4ED8' : '#64748B',
+                  border: targetFormat === 'standar' ? '2px solid var(--accent)' : '1px solid var(--border-color)',
+                  backgroundColor: targetFormat === 'standar' ? 'rgba(37, 99, 235, 0.12)' : 'var(--bg-card-inner)',
+                  color: targetFormat === 'standar' ? 'var(--accent)' : 'var(--text-secondary)',
                   fontWeight: targetFormat === 'standar' ? '600' : 'normal',
                   fontSize: '0.85rem',
                   cursor: 'pointer',
@@ -511,20 +511,20 @@ Instruksi Pengguna: ${prompt}`;
 
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <label style={{ fontWeight: 'bold', color: '#334155' }}>Instruksi Pembuatan Modul</label>
+              <label style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>Instruksi Pembuatan Modul</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <label style={{ cursor: 'pointer', color: '#2B579A', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', padding: '4px 8px', backgroundColor: '#f1f5f9', borderRadius: '4px' }}>
+                <label style={{ cursor: 'pointer', color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', padding: '4px 8px', backgroundColor: 'var(--bg-card-inner)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
                   <Paperclip size={14} /> Berkas
                   <input type="file" onChange={handleFileUpload} accept="image/*,application/pdf" style={{ display: 'none' }} />
                 </label>
-                <button type="button" onClick={handleListen} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', padding: '4px 8px', backgroundColor: isListening ? '#ef4444' : '#f1f5f9', color: isListening ? 'white' : '#2B579A', border: 'none', borderRadius: '4px', cursor: 'pointer', transition: '0.2s' }}>
+                <button type="button" onClick={handleListen} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', padding: '4px 8px', backgroundColor: isListening ? '#ef4444' : 'var(--bg-card-inner)', color: isListening ? 'white' : 'var(--accent)', border: '1px solid var(--border-color)', borderRadius: '4px', cursor: 'pointer', transition: '0.2s' }}>
                   {isListening ? <MicOff size={14} /> : <Mic size={14} />} Dikte
                 </button>
               </div>
             </div>
             
             {attachedFile && (
-              <div style={{ fontSize: '0.85rem', color: '#2B579A', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ fontSize: '0.85rem', color: 'var(--accent)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 📎 {attachedFile.name} 
                 <button type="button" onClick={() => setAttachedFile(null)} style={{ color: 'red', background: 'none', border: 'none', cursor: 'pointer' }}>✖</button>
               </div>
@@ -532,11 +532,11 @@ Instruksi Pengguna: ${prompt}`;
 
             <textarea 
               className="form-control" 
-              placeholder="Contoh: Buatkan modul ajar Deep Learning mata pelajaran Sejarah Fase F Kelas 11 tentang Sejarah Pergerakan Nasional. Nama penulis Rio Refki Maulana, alokasi waktu 2x45 menit, font Times New Roman ukuran 12pt."
-              rows={5}
+              placeholder="Tuliskan mata pelajaran, topik/materi, fase/kelas, dan instruksi khusus modul yang ingin dibuatkan AI..."
+              rows={4}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', border: '1px solid #cbd5e1', borderRadius: '6px', resize: 'vertical', fontSize: '0.9rem' }}
+              style={{ width: '100%', padding: '0.75rem', border: '1px solid var(--border-color)', borderRadius: '6px', resize: 'vertical', fontSize: '0.9rem', backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)' }}
             />
           </div>
 

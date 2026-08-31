@@ -1,6 +1,6 @@
 import React from 'react';
 import Editor from './Editor';
-import { Brain, HeartHandshake, Smile, Layers, GitFork, Lightbulb } from 'lucide-react';
+import { Brain, HeartHandshake, Smile, Layers, GitFork } from 'lucide-react';
 
 const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
   return (
@@ -8,10 +8,10 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
       <div className="section-header">
         <div className="flex items-center gap-2">
           <span className="badge-step">4</span>
-          <h2>PRAKTIK PEDAGOGIS DEEP LEARNING</h2>
+          <h2>4. PRAKTIK PEDAGOGIS DEEP LEARNING</h2>
         </div>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Integrasikan 3 pilar utama Pembelajaran Mendalam (Mindful, Meaningful, Joyful) serta model dan metode pembelajaran yang memberdayakan.
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+          Integrasi 3 pilar Pembelajaran Mendalam (Mindful, Meaningful, Joyful) serta model dan metode pembelajaran.
         </p>
       </div>
 
@@ -23,7 +23,7 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
             <h4 style={{ margin: 0, color: '#0369A1' }}>Mindful Learning</h4>
           </div>
           <p className="text-xs text-muted" style={{ margin: 0 }}>
-            Hadir seutuhnya, kesadaran penuh, fokus, reflektif, dan keterbukaan pikiran saat belajar.
+            Kesadaran penuh, fokus, reflektif, dan keterbukaan pikiran saat belajar.
           </p>
         </div>
 
@@ -33,7 +33,7 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
             <h4 style={{ margin: 0, color: '#047857' }}>Meaningful Learning</h4>
           </div>
           <p className="text-xs text-muted" style={{ margin: 0 }}>
-            Relevan dengan dunia nyata, menghubungkan konsep dengan pengalaman hidup siswa.
+            Kontekstual, menghubungkan materi dengan dunia nyata dan pengalaman siswa.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
             <h4 style={{ margin: 0, color: '#B45309' }}>Joyful Learning</h4>
           </div>
           <p className="text-xs text-muted" style={{ margin: 0 }}>
-            Menyenangkan, memicu rasa ingin tahu (curiosity), apresiatif, dan menggembirakan.
+            Menyenangkan, memicu antusiasme, apresiatif, dan menggembirakan.
           </p>
         </div>
       </div>
@@ -52,19 +52,19 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
       <div className="form-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Brain size={18} color="#0284C7" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: '#0369A1' }}>
-            A. Mindful Learning (Pembelajaran Berkesadaran / Sadar Penuh)
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            A. Mindful Learning (Pembelajaran Berkesadaran)
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Bagaimana guru menumbuhkan fokus, rasa ingin tahu yang tenang, teknik 'STOP'/hening sejenak, atau latihan metakognisi sebelum dan saat belajar.
+          Strategi menumbuhkan fokus, latihan kesadaran/hening sejenak, atau refleksi diri siswa.
         </p>
         <Editor 
           value={data.mindfulLearning || ''} 
           onChange={(val) => onChange('mindfulLearning', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: Mengawali sesi dengan teknik pernapasan sadar (STOP: Stop, Take a breath, Observe, Proceed) untuk memusatkan perhatian, mengajak siswa mengamati diri dan menyadari tujuan belajarnya hari ini."
+          placeholder="Uraikan penerapan Mindful Learning..."
         />
       </div>
 
@@ -72,19 +72,19 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
       <div className="form-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <HeartHandshake size={18} color="#059669" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: '#047857' }}>
-            B. Meaningful Learning (Pembelajaran Bermakna & Relevan)
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            B. Meaningful Learning (Pembelajaran Bermakna)
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Bagaimana materi dikaitkan dengan konteks kehidupan sehari-hari siswa, pemecahan masalah otentik, dan nilai kemanfaatannya bagi masa depan.
+          Pengaitan materi dengan konteks kehidupan nyata, pemecahan masalah, dan kebermanfaatan.
         </p>
         <Editor 
           value={data.meaningfulLearning || ''} 
           onChange={(val) => onChange('meaningfulLearning', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: Siswa menganalisis kasus nyata kebiasaan konsumsi makanan di lingkungan sekitar, menghubungkan dengan data kesehatan keluarga, sehingga konsep nutrisi menjadi relevan langsung dengan kesehariannya."
+          placeholder="Uraikan penerapan Meaningful Learning..."
         />
       </div>
 
@@ -92,19 +92,19 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
       <div className="form-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Smile size={18} color="#D97706" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: '#B45309' }}>
-            C. Joyful Learning (Pembelajaran Menggembirakan / Menyenangkan)
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            C. Joyful Learning (Pembelajaran Menggembirakan)
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Strategi membuat atmosfer belajar yang hangat, antusias, interaktif melalui gamifikasi edukatif, simulasi seru, atau apresiasi karya murid.
+          Aktivitas interaktif, gamifikasi edukatif, simulasi seru, atau apresiasi karya murid.
         </p>
         <Editor 
           value={data.joyfulLearning || ''} 
           onChange={(val) => onChange('joyfulLearning', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: Menggunakan kuis interaktif berhadiah bintang apresiasi, simulasi peran detektif sains, serta galeri walk di mana setiap kelompok saling memberi stiker tepuk tangan/umpan balik positif."
+          placeholder="Uraikan penerapan Joyful Learning..."
         />
       </div>
 
@@ -112,19 +112,19 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
       <div className="form-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Layers size={18} color="#7C3AED" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
             D. Model Pembelajaran
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Pilih atau uraikan model pembelajaran mendalam yang digunakan (misal: Problem Based Learning, Project Based Learning, Inquiry Learning, Deep Learning Cycle).
+          Model pembelajaran yang diterapkan (PBL, PjBL, Inquiry, Deep Learning Cycle).
         </p>
         <Editor 
           value={data.modelPembelajaran || ''} 
           onChange={(val) => onChange('modelPembelajaran', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: Problem Based Learning (PBL) terintegrasi dengan Siklus Pembelajaran Mendalam (Deep Learning Cycle: Memahami, Mengaplikasi, Merefleksi)."
+          placeholder="Tuliskan model pembelajaran..."
         />
       </div>
 
@@ -132,19 +132,19 @@ const SectionPedagogisDeepLearning = ({ data, onChange, topic, fase }) => {
       <div className="form-group">
         <div className="flex items-center gap-2 mb-2">
           <GitFork size={18} color="#2563EB" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
             E. Metode Pembelajaran
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Kombinasi metode yang bervariasi (Diskusi Kelompok, Eksperimen/Praktikum, Studi Kasus, Presentasi, Refleksi Diri).
+          Metode kegiatan (Diskusi, Eksperimen, Studi Kasus, Presentasi, Gallery Walk).
         </p>
         <Editor 
           value={data.metodePembelajaran || ''} 
           onChange={(val) => onChange('metodePembelajaran', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: Diskusi kolaboratif, investigasi kelompok, tanya jawab reflektif, demonstrasi, dan presentasi unjuk karya (Gallery Walk)."
+          placeholder="Tuliskan metode pembelajaran..."
         />
       </div>
     </div>

@@ -8,10 +8,10 @@ const SectionPemahamanPemantik = ({ data, onChange, topic, fase }) => {
       <div className="section-header">
         <div className="flex items-center gap-2">
           <span className="badge-step">7 & 8</span>
-          <h2>PEMAHAMAN BERMAKNA & PERTANYAAN PEMANTIK</h2>
+          <h2>7 & 8. PEMAHAMAN BERMAKNA & PERTANYAAN PEMANTIK</h2>
         </div>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Rumuskan intisari pemahaman yang akan diingat siswa seumur hidup dan pertanyaan esensial pemantik rasa ingin tahu.
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+          Intisari pemahaman konsep esensial dan pertanyaan terbuka pemantik daya nalar.
         </p>
       </div>
 
@@ -19,19 +19,19 @@ const SectionPemahamanPemantik = ({ data, onChange, topic, fase }) => {
       <div className="form-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Lightbulb size={18} color="#D97706" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
-            7. PEMAHAMAN BERMAKNA (BIG IDEA / ENDURING UNDERSTANDING)
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            7. PEMAHAMAN BERMAKNA
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Uraikan pemahaman mendalam yang diperoleh siswa setelah mempelajari topik ini yang bermanfaat bagi kehidupannya.
+          Konsep esensial yang bermakna jangka panjang bagi kehidupan siswa.
         </p>
         <Editor 
           value={data.pemahamanBermakna || ''} 
           onChange={(val) => onChange('pemahamanBermakna', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: <p>Siswa menyadari bahwa tubuh manusia merupakan sistem yang saling terhubung dan bergantung satu sama lain; menjaga satu bagian tubuh berarti memelihara keseimbangan seluruh kehidupan kita.</p>"
+          placeholder="Tuliskan pemahaman bermakna..."
         />
       </div>
 
@@ -39,19 +39,19 @@ const SectionPemahamanPemantik = ({ data, onChange, topic, fase }) => {
       <div className="form-group">
         <div className="flex items-center gap-2 mb-2">
           <HelpCircle size={18} color="#2563EB" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
-            8. PERTANYAAN PEMANTIK (ESSENTIAL QUESTIONS)
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
+            8. PERTANYAAN PEMANTIK
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Pertanyaan esensial terbuka (open-ended) yang memicu diskusi mendalam, rasa penasaran, dan eksplorasi berpikir tingkat tinggi.
+          Pertanyaan terbuka (open-ended) yang memantik rasa penasaran dan diskusi kritis.
         </p>
         <Editor 
           value={data.pertanyaanPemantik || ''} 
           onChange={(val) => onChange('pertanyaanPemantik', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: <ol><li>Mengapa ketika kita berolahraga kencang, detak jantung dan napas kita berdetak jauh lebih cepat?</li><li>Apa yang akan terjadi jika salah satu organ tubuh kita berhenti berfungsi selama 5 menit saja?</li><li>Bagaimana pola makan kita hari ini menentukan kualitas kesehatan kita di usia senja?</li></ol>"
+          placeholder="Tuliskan pertanyaan pemantik..."
         />
       </div>
     </div>

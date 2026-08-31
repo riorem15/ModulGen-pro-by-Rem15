@@ -288,9 +288,10 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Clean, Modern Header */}
+      {/* Clean, Modern Header with Logo */}
       <header className="app-header">
         <div className="header-brand">
+          <img src="/favicon.svg" alt="ModulGen Logo" className="app-header-logo" />
           <h1>MODULGEN PRO <span className="brand-by">by Rem15</span></h1>
         </div>
 
@@ -305,11 +306,11 @@ function App() {
           </button>
           
           <button 
-            className="btn btn-secondary header-btn-theme" 
+            className={`btn header-btn-theme ${isDarkMode ? 'dark-active' : ''}`}
             onClick={toggleTheme} 
-            title="Ganti Mode Terang/Gelap"
+            title={isDarkMode ? "Ganti ke Mode Terang" : "Ganti ke Mode Gelap"}
           >
-            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+            {isDarkMode ? <Sun size={17} color="#FDE047" /> : <Moon size={17} />}
           </button>
 
           <button 

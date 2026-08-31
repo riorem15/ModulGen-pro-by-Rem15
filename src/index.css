@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Modul Gen Pro Main Colors */
+  /* Modul Gen Pro Main Colors (Light Mode) */
   --navy: #0A192F;
-  --navy-light: #112240;
-  --navy-lighter: #233554;
+  --navy-light: #1E293B;
+  --navy-lighter: #334155;
   --white: #FFFFFF;
   --text-primary: #0F172A;
   --text-secondary: #475569;
+  --text-muted: #64748B;
   --bg-primary: #F8FAFC;
   --bg-secondary: #FFFFFF;
+  --bg-card-inner: #F8FAFC;
+  --bg-input: #FFFFFF;
   --accent: #2563EB;
   --accent-hover: #1D4ED8;
   --border-color: #E2E8F0;
@@ -18,21 +21,24 @@
 
   /* Additional layout variables */
   --border-radius: 10px;
-  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
 }
 
 [data-theme='dark'] {
-  --navy: #f8fafc;
-  --navy-light: #cbd5e1;
-  --navy-lighter: #94a3b8;
-  --white: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --bg-primary: #0b1329;
-  --bg-secondary: #1e293b;
-  --border-color: #334155;
-  --accent: #3b82f6;
-  --accent-hover: #60a5fa;
+  --navy: #F8FAFC;
+  --navy-light: #E2E8F0;
+  --navy-lighter: #CBD5E1;
+  --white: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --bg-primary: #0A1128;
+  --bg-secondary: #131E3A;
+  --bg-card-inner: #0F172A;
+  --bg-input: #0B1329;
+  --border-color: #2D3E64;
+  --accent: #3B82F6;
+  --accent-hover: #60A5FA;
 }
 
 *, *::before, *::after {
@@ -57,6 +63,7 @@ body {
   width: 100%;
   min-height: 100vh;
   touch-action: manipulation;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -87,20 +94,25 @@ button {
 input, textarea, select {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   border: 1px solid var(--border-color);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-input);
   color: var(--text-primary);
   border-radius: var(--border-radius);
   padding: 0.6rem 0.85rem;
   font-size: 0.92rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
   width: 100%;
   max-width: 100%;
   display: block;
 }
 
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
 input:focus, textarea:focus, select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
   outline: none;
 }
 
@@ -112,6 +124,7 @@ input:focus, textarea:focus, select:focus {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-color);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 /* Utility layout */
@@ -148,11 +161,15 @@ input:focus, textarea:focus, select:focus {
 .gap-4 { gap: 1rem; }
 
 .mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
 .mb-4 { margin-bottom: 1rem; }
+.mb-5 { margin-bottom: 1.25rem; }
 .mb-6 { margin-bottom: 1.5rem; }
 .mt-1 { margin-top: 0.25rem; }
 .mt-2 { margin-top: 0.5rem; }
 .mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
 
 .w-full { width: 100%; }
 
@@ -165,9 +182,10 @@ input:focus, textarea:focus, select:focus {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--navy-lighter);
+  opacity: 0.4;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--text-secondary);
 }

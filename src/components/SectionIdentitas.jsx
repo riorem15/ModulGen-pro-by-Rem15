@@ -10,7 +10,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
           <h2>1. IDENTITAS MODUL</h2>
         </div>
         <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
-          Isi informasi identitas kurikulum modul dan konfigurasi format dokumen.
+          Informasi identitas kurikulum dan konfigurasi format dokumen.
         </p>
       </div>
 
@@ -31,7 +31,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
               </div>
               <div className="format-choice-info">
                 <div className="format-choice-title">Modul Deep Learning</div>
-                <div className="format-choice-desc">10 Kerangka Lengkap (Mindful, Meaningful, Joyful)</div>
+                <div className="format-choice-desc">10 Kerangka (Mindful, Meaningful, Joyful)</div>
               </div>
             </button>
 
@@ -90,7 +90,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
         </div>
       </div>
 
-      {/* Grid Identitas */}
+      {/* Grid Identitas - Clean Professional Placeholders */}
       <div className="form-grid-2">
         <div className="form-group">
           <label>Identitas Penyusun (Nama Guru)</label>
@@ -98,7 +98,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.penyusun || ''} 
             onChange={(e) => onChange('penyusun', e.target.value)}
-            placeholder="Contoh: Rio Refki Maulana, S.Pd."
+            placeholder="Nama lengkap dan gelar guru"
           />
         </div>
         
@@ -108,7 +108,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.instansi || ''} 
             onChange={(e) => onChange('instansi', e.target.value)}
-            placeholder="Contoh: SMA Negeri 1 Banten"
+            placeholder="Nama sekolah / instansi"
           />
         </div>
 
@@ -118,7 +118,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.mataPelajaran || ''} 
             onChange={(e) => onChange('mataPelajaran', e.target.value)}
-            placeholder="Contoh: Biologi / IPA"
+            placeholder="Mata pelajaran"
           />
         </div>
 
@@ -128,7 +128,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.faseKelas || ''} 
             onChange={(e) => onChange('faseKelas', e.target.value)}
-            placeholder="Contoh: Fase E / Kelas 10"
+            placeholder="Fase dan tingkat kelas"
           />
         </div>
 
@@ -138,7 +138,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.semester || ''} 
             onChange={(e) => onChange('semester', e.target.value)}
-            placeholder="Contoh: Genap (2)"
+            placeholder="Semester (Ganjil / Genap)"
           />
         </div>
 
@@ -148,7 +148,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.materiAjar || ''} 
             onChange={(e) => onChange('materiAjar', e.target.value)}
-            placeholder="Contoh: Sistem Sirkulasi dan Peredaran Darah"
+            placeholder="Topik materi pokok pembelajaran"
           />
         </div>
 
@@ -158,7 +158,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.babSubbab || ''} 
             onChange={(e) => onChange('babSubbab', e.target.value)}
-            placeholder="Contoh: Bab 4 / Subbab 4.2 Struktur Jantung & Pembuluh Darah"
+            placeholder="Bab dan subbab materi"
           />
         </div>
 
@@ -168,7 +168,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
             type="text" 
             value={data.alokasiWaktu || ''} 
             onChange={(e) => onChange('alokasiWaktu', e.target.value)}
-            placeholder="Contoh: 2 x 45 Menit (1 Pertemuan / 2 JP)"
+            placeholder="Jumlah JP / Alokasi waktu"
           />
         </div>
       </div>

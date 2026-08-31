@@ -8,10 +8,10 @@ const SectionMediaSarana = ({ data, onChange, topic, fase }) => {
       <div className="section-header">
         <div className="flex items-center gap-2">
           <span className="badge-step">5 & 6</span>
-          <h2>MEDIA, SARANA & PRASARANA PEMBELAJARAN</h2>
+          <h2>5 & 6. MEDIA, SARANA & PRASARANA</h2>
         </div>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Rincikan media pembelajaran interaktif serta ketersediaan sarana dan prasarana penunjang aktivitas mendalam.
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+          Media pembelajaran serta sarana dan prasarana penunjang kegiatan.
         </p>
       </div>
 
@@ -19,19 +19,19 @@ const SectionMediaSarana = ({ data, onChange, topic, fase }) => {
       <div className="form-group mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Tv size={18} color="#2563EB" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
             5. MEDIA PEMBELAJARAN
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Media ajar yang digunakan untuk memperkuat pemahaman konsep (Video interaktif, Slide canva, Alat peraga konkrit, Flashcard, LKPD digital, Simulasi virtual).
+          Media digital, video interaktif, slide, alat peraga, atau LKPD.
         </p>
         <Editor 
           value={data.mediaPembelajaran || ''} 
           onChange={(val) => onChange('mediaPembelajaran', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: <ul><li>Video animasi pembelajaran YouTube tentang mekanisme sistem peredaran darah.</li><li>Slide presentasi interaktif Canva / Quizizz.</li><li>Model torso / alat peraga organ manusia 3D.</li><li>Lembar Kerja Peserta Didik (LKPD) digital & cetak.</li></ul>"
+          placeholder="Tuliskan daftar media pembelajaran..."
         />
       </div>
 
@@ -39,19 +39,19 @@ const SectionMediaSarana = ({ data, onChange, topic, fase }) => {
       <div className="form-group">
         <div className="flex items-center gap-2 mb-2">
           <Building2 size={18} color="#059669" />
-          <label style={{ margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--navy-light)' }}>
+          <label style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>
             6. SARANA DAN PRASARANA
           </label>
         </div>
         <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Fasilitas dan peralatan yang mendukung proses pembelajaran di satuan pendidikan.
+          Fasilitas, perangkat TIK, dan ruang belajar di sekolah.
         </p>
         <Editor 
           value={data.saranaPrasarana || ''} 
           onChange={(val) => onChange('saranaPrasarana', val)} 
           topic={topic}
           fase={fase}
-          placeholder="Contoh: <ul><li><strong>Sarana:</strong> Laptop, LCD Proyektor, Speaker aktif, Jaringan Internet/Wi-Fi, Papan Tulis & Spidol, Buku Teks Siswa.</li><li><strong>Prasarana:</strong> Ruang Kelas yang nyaman dan fleksibel untuk kerja kelompok, Ruang Laboratorium IPA/Komputer, Perpustakaan Sekolah.</li></ul>"
+          placeholder="Tuliskan sarana dan prasarana..."
         />
       </div>
     </div>
