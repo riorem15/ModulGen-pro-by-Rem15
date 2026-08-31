@@ -5,40 +5,57 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
   return (
     <div className="section-container animate-fade-in">
       <div className="section-header">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <span className="badge-step">1</span>
-            <h2>1. IDENTITAS MODUL & PENGATURAN</h2>
-          </div>
-          
-          {onFormatChange && (
-            <div className="format-type-toggle flex items-center gap-2">
-              <button
-                type="button"
-                className={`format-pill-btn ${formatType === 'deep_learning' ? 'active-dl' : ''}`}
-                onClick={() => onFormatChange('deep_learning')}
-              >
-                <Sparkles size={14} /> Format Deep Learning (10 Kerangka)
-              </button>
-              <button
-                type="button"
-                className={`format-pill-btn ${formatType === 'standar' ? 'active-std' : ''}`}
-                onClick={() => onFormatChange('standar')}
-              >
-                <BookOpen size={14} /> Format Standar (Merdeka)
-              </button>
-            </div>
-          )}
+        <div className="flex items-center gap-2">
+          <span className="badge-step">1</span>
+          <h2>1. IDENTITAS MODUL</h2>
         </div>
         <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
-          Isi informasi identitas kurikulum modul dan konfigurasi tampilan dokumen cetak.
+          Isi informasi identitas kurikulum modul dan konfigurasi format dokumen.
         </p>
       </div>
 
+      {/* Format Selector Card */}
+      {onFormatChange && (
+        <div className="format-selection-card mb-5">
+          <label className="format-selection-label">
+            <Layers size={15} /> Format Modul Ajar:
+          </label>
+          <div className="format-selection-grid">
+            <button
+              type="button"
+              className={`format-choice-card ${formatType === 'deep_learning' ? 'active-dl' : ''}`}
+              onClick={() => onFormatChange('deep_learning')}
+            >
+              <div className="format-choice-icon">
+                <Sparkles size={18} />
+              </div>
+              <div className="format-choice-info">
+                <div className="format-choice-title">Modul Deep Learning</div>
+                <div className="format-choice-desc">10 Kerangka Lengkap (Mindful, Meaningful, Joyful)</div>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              className={`format-choice-card ${formatType === 'standar' ? 'active-std' : ''}`}
+              onClick={() => onFormatChange('standar')}
+            >
+              <div className="format-choice-icon">
+                <BookOpen size={18} />
+              </div>
+              <div className="format-choice-info">
+                <div className="format-choice-title">Standar Merdeka</div>
+                <div className="format-choice-desc">Format Ringkas Komponen Inti</div>
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Pengaturan Font Dokumen */}
-      <div className="form-group mb-6" style={{ background: 'var(--bg-secondary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-        <h3 style={{ fontSize: '0.95rem', marginBottom: '0.75rem', color: 'var(--navy)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Settings size={16} /> Pengaturan Tipografi Dokumen
+      <div className="form-group mb-6 typography-card">
+        <h3 className="typography-title">
+          <Settings size={15} /> Pengaturan Tipografi Dokumen
         </h3>
         <div className="form-grid-3">
           <div>

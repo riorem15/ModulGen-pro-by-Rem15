@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Download, FileText, LayoutDashboard, Settings, Moon, Sun, Sparkles, 
-  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, CheckSquare, Award,
-  Save, RotateCcw, Check
+  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, Award
 } from 'lucide-react';
 import './App.css';
 
@@ -113,9 +112,8 @@ function App() {
   const [showPreview, setShowPreview] = useState(false);
   const [showMGenAi, setShowMGenAi] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [lastSavedTime, setLastSavedTime] = useState(null);
 
-  // Global State for the Module with LocalStorage Auto-Recovery
+  // Global State for the Module with LocalStorage Auto-Recovery (Silent in background)
   const [moduleData, setModuleData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -146,14 +144,12 @@ function App() {
     return defaultModuleData;
   });
 
-  // Auto-Save Effect whenever data, format, or tab changes
+  // Auto-Save Effect whenever data, format, or tab changes (always active & silent)
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(moduleData));
       localStorage.setItem(FORMAT_KEY, formatType);
       localStorage.setItem(TAB_KEY, activeTab);
-      const timeStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-      setLastSavedTime(timeStr);
     } catch (err) {
       console.error("Gagal menyimpan ke localStorage:", err);
     }
@@ -213,16 +209,6 @@ function App() {
     }
   };
 
-  const handleResetModule = () => {
-    if (window.confirm("Apakah Anda yakin ingin memulai modul baru dari awal? Data teks yang sedang aktif akan direset.")) {
-      setModuleData(defaultModuleData);
-      setActiveTab('identitas');
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(TAB_KEY);
-      setLastSavedTime(null);
-    }
-  };
-
   const handleAiUpdate = (data) => {
     setModuleData(prev => ({
       ...prev,
@@ -262,23 +248,23 @@ function App() {
   const getTabsForFormat = (fmt) => {
     if (fmt === 'deep_learning') {
       return [
-        { id: 'identitas', label: '1. Identitas', icon: <Settings size={17} /> },
-        { id: 'identifikasi', label: '2. Identifikasi', icon: <UserCheck size={17} /> },
-        { id: 'desainPembelajaran', label: '3. Desain Pembelajaran', icon: <Target size={17} /> },
-        { id: 'pedagogis', label: '4. Pedagogi Deep Learning', icon: <Brain size={17} /> },
-        { id: 'mediaSarana', label: '5 & 6. Media & Sarana', icon: <Tv size={17} /> },
-        { id: 'pemahamanPemantik', label: '7 & 8. Pemahaman & Pemantik', icon: <Lightbulb size={17} /> },
-        { id: 'materiReferensi', label: '9. Materi & Referensi', icon: <FileText size={17} /> },
-        { id: 'langkah', label: '10. Langkah Pembelajaran', icon: <LayoutDashboard size={17} /> },
-        { id: 'lampiran', label: '11. Lampiran & Pengesahan', icon: <Award size={17} /> }
+        { id: 'identitas', label: '1. Identitas', icon: <Settings size={16} /> },
+        { id: 'identifikasi', label: '2. Identifikasi', icon: <UserCheck size={16} /> },
+        { id: 'desainPembelajaran', label: '3. Desain Pembelajaran', icon: <Target size={16} /> },
+        { id: 'pedagogis', label: '4. Pedagogi Deep Learning', icon: <Brain size={16} /> },
+        { id: 'mediaSarana', label: '5 & 6. Media & Sarana', icon: <Tv size={16} /> },
+        { id: 'pemahamanPemantik', label: '7 & 8. Pemahaman & Pemantik', icon: <Lightbulb size={16} /> },
+        { id: 'materiReferensi', label: '9. Materi & Referensi', icon: <FileText size={16} /> },
+        { id: 'langkah', label: '10. Langkah Pembelajaran', icon: <LayoutDashboard size={16} /> },
+        { id: 'lampiran', label: '11. Lampiran & Pengesahan', icon: <Award size={16} /> }
       ];
     } else {
       return [
-        { id: 'identitas', label: '1. Identitas', icon: <Settings size={17} /> },
-        { id: 'inti', label: '2. Komponen Inti', icon: <LayoutDashboard size={17} /> },
-        { id: 'materiReferensi', label: '3. Materi & Referensi', icon: <FileText size={17} /> },
-        { id: 'langkah', label: '4. Langkah Pembelajaran', icon: <LayoutDashboard size={17} /> },
-        { id: 'lampiran', label: '5. Lampiran LKPD & Asesmen', icon: <FileText size={17} /> }
+        { id: 'identitas', label: '1. Identitas', icon: <Settings size={16} /> },
+        { id: 'inti', label: '2. Komponen Inti', icon: <LayoutDashboard size={16} /> },
+        { id: 'materiReferensi', label: '3. Materi & Referensi', icon: <FileText size={16} /> },
+        { id: 'langkah', label: '4. Langkah Pembelajaran', icon: <LayoutDashboard size={16} /> },
+        { id: 'lampiran', label: '5. Lampiran LKPD & Asesmen', icon: <FileText size={16} /> }
       ];
     }
   };
@@ -302,56 +288,54 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* Clean, Modern Header */}
       <header className="app-header">
-        <div className="flex items-center gap-3">
-          <h1>MODULGEN PRO <span style={{ fontSize: '0.85rem', opacity: 0.8, fontWeight: 400 }}>by Rem15</span></h1>
-          <span className="format-badge-header">
-            {formatType === 'deep_learning' ? '⚡ Deep Learning Mode' : '📄 Standar Merdeka'}
-          </span>
-          {lastSavedTime && (
-            <span className="save-badge-indicator" title="Data modul tersimpan otomatis di browser">
-              <Check size={12} color="#86efac" /> Tersimpan {lastSavedTime}
-            </span>
-          )}
+        <div className="header-brand">
+          <h1>MODULGEN PRO <span className="brand-by">by Rem15</span></h1>
         </div>
 
-        <div className="flex gap-2 items-center flex-wrap">
+        <div className="header-actions">
           <button 
-            className="btn btn-secondary" 
-            onClick={handleResetModule}
-            style={{ padding: '0.45rem 0.75rem', fontSize: '0.8rem', backgroundColor: 'transparent', borderColor: 'rgba(255,255,255,0.25)', color: 'var(--white)' }}
-            title="Reset & Buat Modul Baru"
-          >
-            <RotateCcw size={14} /> Buat Baru
-          </button>
-          <button 
-            className="btn btn-magic" 
+            className="btn btn-magic header-btn-ai" 
             onClick={() => setShowMGenAi(true)} 
-            style={{ padding: '0.5rem 1rem', fontWeight: '600' }}
+            title="Buka AI Generator Modul"
           >
-            <Sparkles size={18} /> MGen AI
+            <Sparkles size={16} />
+            <span className="btn-label">MGen AI</span>
           </button>
-          <button className="btn btn-secondary" onClick={toggleTheme} style={{ padding: '0.5rem', backgroundColor: 'transparent', borderColor: 'var(--border-color)', color: 'var(--white)' }} title="Ganti Mode Terang/Gelap">
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+          
+          <button 
+            className="btn btn-secondary header-btn-theme" 
+            onClick={toggleTheme} 
+            title="Ganti Mode Terang/Gelap"
+          >
+            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <button className="btn btn-primary" onClick={() => setShowPreview(true)}>
-            <Download size={18} /> Preview & Export
+
+          <button 
+            className="btn btn-primary header-btn-preview" 
+            onClick={() => setShowPreview(true)}
+            title="Pratinjau & Unduh Dokumen"
+          >
+            <Download size={16} />
+            <span className="btn-label">Preview & Export</span>
           </button>
         </div>
       </header>
 
       <main className="main-content">
-        <div className="card" style={{ padding: '1.75rem' }}>
+        <div className="card main-card">
           
-          {/* Tab Navigation (Directly at top of card, clean & sleek) */}
+          {/* Tab Navigation (Directly at top of card, touch scrollable) */}
           <div className="tabs-nav">
             {tabs.map(tab => (
               <button
                 key={tab.id}
-                className={`tab-btn flex items-center gap-2 ${activeTab === tab.id ? 'active' : ''}`}
+                className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
                 onClick={() => setActiveTab(tab.id)}
               >
-                {tab.icon} {tab.label}
+                <span className="tab-icon">{tab.icon}</span>
+                <span className="tab-label">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -449,16 +433,15 @@ function App() {
           </div>
 
           {/* Navigation Controls */}
-          <div className="flex justify-between items-center" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', marginTop: '2rem' }}>
+          <div className="nav-controls-footer">
             <button 
-              className="btn btn-secondary" 
+              className="btn btn-secondary nav-btn-prev" 
               onClick={handlePrev} 
               disabled={currentTabIndex === 0}
-              style={{ opacity: currentTabIndex === 0 ? 0.5 : 1, cursor: currentTabIndex === 0 ? 'not-allowed' : 'pointer' }}
             >
               ← Sebelumnya
             </button>
-            <button className="btn btn-primary" onClick={handleNext}>
+            <button className="btn btn-primary nav-btn-next" onClick={handleNext}>
               {currentTabIndex === tabs.length - 1 ? 'Selesai & Unduh 🎉' : 'Selanjutnya →'}
             </button>
           </div>
