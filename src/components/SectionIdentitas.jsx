@@ -16,7 +16,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
 
       {/* Format Selector Card */}
       {onFormatChange && (
-        <div className="format-selection-card mb-5">
+        <div id="tour-format-selector" className="format-selection-card mb-5">
           <label className="format-selection-label">
             <Layers size={15} /> Format Modul Ajar:
           </label>

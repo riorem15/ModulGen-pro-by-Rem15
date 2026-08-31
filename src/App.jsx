@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Download, FileText, LayoutDashboard, Settings, Moon, Sun, Sparkles, 
-  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, Award
+  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, Award, HelpCircle
 } from 'lucide-react';
 import './App.css';
 
@@ -18,6 +18,7 @@ import SectionLangkah from './components/SectionLangkah';
 import SectionLampiran from './components/SectionLampiran';
 import PreviewModal from './components/PreviewModal';
 import MGenAiModal from './components/MGenAiModal';
+import TutorialModal from './components/TutorialModal';
 
 const STORAGE_KEY = 'modulgen_pro_saved_data_v3';
 const FORMAT_KEY = 'modulgen_pro_format_type_v3';
@@ -111,6 +112,9 @@ function App() {
 
   const [showPreview, setShowPreview] = useState(false);
   const [showMGenAi, setShowMGenAi] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(() => {
+    return !localStorage.getItem('modulgen_pro_tutorial_seen');
+  });
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Global State for the Module with LocalStorage Auto-Recovery (Silent in background)
@@ -297,6 +301,7 @@ function App() {
 
         <div className="header-actions">
           <button 
+            id="tour-btn-ai"
             className="btn btn-magic header-btn-ai" 
             onClick={() => setShowMGenAi(true)} 
             title="Buka AI Generator Modul"
@@ -306,6 +311,15 @@ function App() {
           </button>
           
           <button 
+            className="btn btn-secondary header-btn-tutorial" 
+            onClick={() => setShowTutorial(true)} 
+            title="Buka Panduan & Tutorial Penggunaan"
+          >
+            <HelpCircle size={16} color="#3B82F6" />
+            <span className="btn-label">Panduan</span>
+          </button>
+
+          <button 
             className={`btn header-btn-theme ${isDarkMode ? 'dark-active' : ''}`}
             onClick={toggleTheme} 
             title={isDarkMode ? "Ganti ke Mode Terang" : "Ganti ke Mode Gelap"}
@@ -314,6 +328,7 @@ function App() {
           </button>
 
           <button 
+            id="tour-btn-preview"
             className="btn btn-primary header-btn-preview" 
             onClick={() => setShowPreview(true)}
             title="Pratinjau & Unduh Dokumen"
@@ -328,7 +343,7 @@ function App() {
         <div className="card main-card">
           
           {/* Tab Navigation (Directly at top of card, touch scrollable) */}
-          <div className="tabs-nav">
+          <div id="tour-tabs-nav" className="tabs-nav">
             {tabs.map(tab => (
               <button
                 key={tab.id}
@@ -461,6 +476,14 @@ function App() {
           currentData={moduleData}
           onClose={() => setShowMGenAi(false)}
           onGenerate={handleAiUpdate}
+        />
+      )}
+
+      {showTutorial && (
+        <TutorialModal 
+          isOpen={showTutorial}
+          onClose={() => setShowTutorial(false)}
+          onNavigateTab={(tab) => setActiveTab(tab)}
         />
       )}
     </div>

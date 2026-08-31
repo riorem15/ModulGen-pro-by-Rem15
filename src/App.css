@@ -68,6 +68,18 @@
   font-size: 0.85rem;
 }
 
+.header-btn-tutorial {
+  padding: 0.45rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.header-btn-tutorial:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
 .header-btn-theme {
   padding: 0.45rem;
   width: 36px;
@@ -553,7 +565,7 @@
   .header-actions {
     gap: 0.35rem;
   }
-  .header-btn-ai, .header-btn-preview {
+  .header-btn-ai, .header-btn-preview, .header-btn-tutorial {
     padding: 0.4rem 0.65rem;
     font-size: 0.78rem;
     border-radius: 6px;
@@ -641,7 +653,8 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
+  .header-btn-tutorial .btn-label,
   .header-btn-preview .btn-label {
     display: none;
   }
