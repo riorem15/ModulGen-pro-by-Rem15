@@ -5,9 +5,9 @@ const deepLearningSystemPrompt = `Anda adalah MGen AI, pakar perancang Modul Aja
 Buatkan modul ajar spesifik, komprehensif, dan berkualitas tinggi berdasarkan instruksi pengguna dengan mematuhi 10 KERANGKA DEEP LEARNING.
 
 KERANGKA WAJIB:
-1. IDENTITAS: Penyusun, Satuan pendidikan, Mata pelajaran, Kelas/Fase, Semester, Materi, Bab/Subbab, Alokasi waktu.
-2. IDENTIFIKASI: Profil Lulusan (dimensi karakter & kompetensi), Kompetensi Awal, Pemetaan Kebutuhan Pembelajaran (Diferensiasi: kesiapan, minat, profil).
-3. DESAIN PEMBELAJARAN: Capaian Pembelajaran (CP), Tujuan Pembelajaran (TP), KKTP (Kriteria Ketercapaian), Kategori Ketercapaian (Rubrik/Interval).
+1. IDENTITAS: Penyusun, Satuan pendidikan, Mata pelajaran, Kelas/Fase, Semester, Materi pokok, Bab/Subbab, Alokasi waktu, serta pengaturan font (fontFamily, fontSize, lineSpacing) jika diminta pengguna di instruksi (misal TNR -> "Times New Roman", font 12 -> "12pt").
+2. IDENTIFIKASI: Profil Lulusan (dimensi karakter & kompetensi), Kompetensi Awal, Pemetaan Kebutuhan Pembelajaran (Diferensiasi: kesiapan, minat, profil belajar).
+3. DESAIN PEMBELAJARAN: Capaian Pembelajaran (CP), Tujuan Pembelajaran (TP), KKTP (Kriteria Ketercapaian), Kategori Ketercapaian (Rubrik/Interval kinerja).
 4. PRAKTIK PEDAGOGIS DEEP LEARNING: Mindful Learning (sadar penuh/fokus/reflektif), Meaningful Learning (kontekstual dunia nyata), Joyful Learning (menggembirakan/apresiatif/gamifikasi), Model Pembelajaran (PBL/PjBL/Inquiry/Deep Learning Cycle), Metode Pembelajaran.
 5. MEDIA PEMBELAJARAN: Media ajar digital, video, alat peraga interaktif.
 6. SARANA DAN PRASARANA: Sarana dan prasarana penunjang kelas/lab/sekolah.
@@ -17,18 +17,24 @@ KERANGKA WAJIB:
 10. LANGKAH-LANGKAH PEMBELAJARAN: Pendahuluan (Mindful & Orientasi), Inti (Sintaks Deep Learning: Memahami, Mengaplikasi, Merefleksi), Penutup (Refleksi Bermakna & Apresiasi Joyful).
 11. LAMPIRAN & PENGESAHAN: LKPD mendalam, Asesmen & Rubrik Penilaian, serta Lembar Pengesahan.
 
-TIDAK BOLEH ADA ROOT KEY LAIN. KEMBALIKAN OBJECT JSON LANGSUNG BERIKUT INI (gunakan HTML p, ul, ol, li, strong, table untuk konten format rich text):
+ATURAN FORMAT JSON SANGAT KETAT:
+- WAJIB hanya gunakan tanda kutip tunggal (') untuk atribut HTML di dalam string JSON (contoh: <table style='width:100%'> atau <div class='card'>).
+- JANGAN PERNAH gunakan tanda kutip ganda (") di dalam nilai string JSON.
+- TIDAK BOLEH ADA ROOT KEY LAIN. KEMBALIKAN OBJECT JSON LANGSUNG BERIKUT INI:
 {
   "formatType": "deep_learning",
   "identitas": {
-    "penyusun": "...",
-    "instansi": "...",
-    "mataPelajaran": "...",
-    "faseKelas": "...",
-    "semester": "...",
-    "materiAjar": "...",
-    "babSubbab": "...",
-    "alokasiWaktu": "..."
+    "penyusun": "Nama Guru",
+    "instansi": "Nama Sekolah",
+    "mataPelajaran": "Mata Pelajaran",
+    "faseKelas": "Fase F / Kelas 11",
+    "semester": "1 (Ganjil)",
+    "materiAjar": "Topik Materi",
+    "babSubbab": "Bab 1 / Subbab 1.1",
+    "alokasiWaktu": "2 x 45 Menit (1 Pertemuan)",
+    "fontFamily": "Poppins",
+    "fontSize": "11pt",
+    "lineSpacing": "1.5"
   },
   "identifikasi": {
     "profilLulusan": ["Penalaran Kritis & Pemecahan Masalah", "Kreativitas & Inovasi", "Kolaborasi & Gotong Royong"],
@@ -46,7 +52,7 @@ TIDAK BOLEH ADA ROOT KEY LAIN. KEMBALIKAN OBJECT JSON LANGSUNG BERIKUT INI (guna
     "meaningfulLearning": "<p>...</p>",
     "joyfulLearning": "<p>...</p>",
     "modelPembelajaran": "<p>Problem Based Learning (PBL) terintegrasi Siklus Deep Learning</p>",
-    "metodePembelajaran": "<p>Diskusi kelompok, penyelidikan ilmiah, dan presentasi apresiatif</p>"
+    "metodePembelajaran": "<p>Diskusi kelompok kolaboratif, penyelidikan sejarah, dan presentasi apresiatif</p>"
   },
   "mediaSarana": {
     "mediaPembelajaran": "<ul><li>...</li><li>...</li></ul>",
@@ -75,6 +81,100 @@ TIDAK BOLEH ADA ROOT KEY LAIN. KEMBALIKAN OBJECT JSON LANGSUNG BERIKUT INI (guna
     "tanggalPengesahan": "Serang, 20 Maret 2026"
   }
 }`;
+
+// Helper: Bulletproof JSON Parser with Self-Healing
+function parseAiJsonResponse(rawText) {
+  if (!rawText || typeof rawText !== 'string') {
+    throw new Error("Respons teks dari AI kosong.");
+  }
+
+  let text = rawText.trim();
+
+  // 1. Strip Markdown fences
+  if (text.startsWith('```json')) {
+    text = text.replace(/^```json\s*/i, '').replace(/\s*```\s*$/, '');
+  } else if (text.startsWith('```')) {
+    text = text.replace(/^```\s*/, '').replace(/\s*```\s*$/, '');
+  }
+
+  // 2. Extract from first { to last }
+  const firstBrace = text.indexOf('{');
+  const lastBrace = text.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace >= firstBrace) {
+    text = text.substring(firstBrace, lastBrace + 1);
+  }
+
+  // Attempt 1: Direct JSON.parse
+  try {
+    return JSON.parse(text);
+  } catch (e1) {
+    console.warn("Direct JSON.parse failed, attempting repair step 1...", e1);
+  }
+
+  // Attempt 2: Clean unescaped control characters
+  let step2 = text.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F]/g, ' ');
+  try {
+    return JSON.parse(step2);
+  } catch (e2) {
+    console.warn("Repair step 2 failed, attempting HTML quote normalization...", e2);
+  }
+
+  // Attempt 3: Replace unescaped double quotes inside HTML attributes (e.g. style="..." or class="...")
+  let step3 = step2.replace(/=(["])(.*?)\1/g, "='$2'");
+  try {
+    return JSON.parse(step3);
+  } catch (e3) {
+    console.warn("Repair step 3 failed, attempting cutoff healing...", e3);
+  }
+
+  // Attempt 4: Cutoff healing (if Gemini was cut off near the end)
+  let step4 = step3;
+  let inString = false;
+  let escaped = false;
+  let openBraces = 0;
+  let openBrackets = 0;
+
+  for (let i = 0; i < step4.length; i++) {
+    const c = step4[i];
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (c === '\\') {
+      escaped = true;
+      continue;
+    }
+    if (c === '"') {
+      inString = !inString;
+      continue;
+    }
+    if (!inString) {
+      if (c === '{') openBraces++;
+      else if (c === '}') openBraces = Math.max(0, openBraces - 1);
+      else if (c === '[') openBrackets++;
+      else if (c === ']') openBrackets = Math.max(0, openBrackets - 1);
+    }
+  }
+
+  if (inString) {
+    step4 += '"';
+  }
+  while (openBrackets > 0) {
+    step4 += ']';
+    openBrackets--;
+  }
+  while (openBraces > 0) {
+    step4 += '}';
+    openBraces--;
+  }
+
+  try {
+    return JSON.parse(step4);
+  } catch (e4) {
+    console.error("All JSON repair attempts failed:", e4);
+    throw new Error(`Format JSON dari AI tidak valid: ${e4.message}`);
+  }
+}
 
 const MGenAiModal = ({ onClose, onGenerate, currentData }) => {
   const [prompt, setPrompt] = useState('');
@@ -174,7 +274,9 @@ Instruksi Pengguna: ${prompt}`;
       const payload = {
         contents: [{ parts }],
         generationConfig: {
-          responseMimeType: "application/json"
+          responseMimeType: "application/json",
+          maxOutputTokens: 8192,
+          temperature: 0.7
         }
       };
 
@@ -196,14 +298,9 @@ Instruksi Pengguna: ${prompt}`;
 
       let text = result.candidates[0].content.parts[0].text;
       
-      // Clean markdown block if Gemini ignores instruction
-      if (text.startsWith('```json')) {
-        text = text.replace(/^```json\n/, '').replace(/\n```$/, '');
-      } else if (text.startsWith('```')) {
-        text = text.replace(/^```\n/, '').replace(/\n```$/, '');
-      }
+      // Self-healing & robust JSON Parser
+      let data = parseAiJsonResponse(text);
       
-      let data = JSON.parse(text);
       // Fallback if wrapped inside another key
       if (data.modul_ajar && !data.identitas) {
         data = data.modul_ajar;
@@ -211,7 +308,12 @@ Instruksi Pengguna: ${prompt}`;
       
       const finalData = {
         formatType: targetFormat,
-        identitas: data.identitas || data.identitas_modul || {},
+        identitas: {
+          ...data.identitas,
+          fontFamily: data.identitas?.fontFamily || currentData?.identitas?.fontFamily || 'Poppins',
+          fontSize: data.identitas?.fontSize || currentData?.identitas?.fontSize || '11pt',
+          lineSpacing: data.identitas?.lineSpacing || currentData?.identitas?.lineSpacing || '1.5'
+        },
         identifikasi: data.identifikasi || {
           profilLulusan: data.inti?.profilPancasila || [],
           kompetensiAwal: data.inti?.kompetensiAwal || '',
@@ -255,11 +357,11 @@ Instruksi Pengguna: ${prompt}`;
         onGenerate(finalData);
         onClose();
       } else {
-        throw new Error("Struktur JSON tidak valid atau kosong.");
+        throw new Error("Struktur data modul tidak lengkap.");
       }
     } catch (error) {
       console.error(error);
-      alert("Gagal melakukan generate dengan AI. Pastikan API key benar dan coba lagi.\nError: " + error.message);
+      alert("Gagal melakukan generate dengan AI.\n\nPesan: " + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -284,7 +386,7 @@ Instruksi Pengguna: ${prompt}`;
           </div>
         </div>
 
-        {/* Mode Berpikir AI Bar (Always visible or toggleable) */}
+        {/* Mode Berpikir AI Bar */}
         <div style={{ padding: '0.85rem 1.75rem', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
           <div className="flex justify-between items-center mb-1.5">
             <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#334155', margin: 0 }}>Mode Berpikir AI</label>
@@ -430,7 +532,7 @@ Instruksi Pengguna: ${prompt}`;
 
             <textarea 
               className="form-control" 
-              placeholder="Contoh: Buatkan modul ajar Deep Learning mata pelajaran IPA Fase D Kelas 8 tentang 'Sistem Pencernaan Manusia'. Lengkapi dengan mindful check-in, asesmen bermakna, dan rubrik penilaian."
+              placeholder="Contoh: Buatkan modul ajar Deep Learning mata pelajaran Sejarah Fase F Kelas 11 tentang Sejarah Pergerakan Nasional. Nama penulis Rio Refki Maulana, alokasi waktu 2x45 menit, font Times New Roman ukuran 12pt."
               rows={5}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
