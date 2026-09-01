@@ -68,6 +68,20 @@
   font-size: 0.85rem;
 }
 
+.header-btn-reset {
+  padding: 0.45rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: rgba(239, 68, 68, 0.12);
+}
+.header-btn-reset:hover {
+  background-color: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #FFFFFF;
+}
+
 .header-btn-tutorial {
   padding: 0.45rem 0.75rem;
   font-weight: 600;
@@ -654,6 +668,7 @@
 }
 
 @media (max-width: 480px) {
+  .header-btn-reset .btn-label,
   .header-btn-tutorial .btn-label,
   .header-btn-preview .btn-label {
     display: none;
@@ -661,4 +676,69 @@
   .header-btn-ai .btn-label {
     display: inline;
   }
+}
+
+/* ==========================================================================
+   9. TOAST NOTIFICATION BANNER
+   ========================================================================== */
+.toast-notification-banner {
+  position: fixed;
+  top: 72px;
+  right: 24px;
+  background-color: #064E3B;
+  color: #ECFDF5;
+  border: 1px solid #10B981;
+  padding: 0.75rem 1.15rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  z-index: 2000;
+  font-size: 0.9rem;
+  font-weight: 500;
+  max-width: 90vw;
+}
+
+[data-theme='dark'] .toast-notification-banner {
+  background-color: #064E3B;
+  color: #D1FAE5;
+  border-color: #34D399;
+}
+
+.toast-text {
+  flex: 1;
+}
+
+.toast-close-btn {
+  background: transparent;
+  border: none;
+  color: #A7F3D0;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+.toast-close-btn:hover {
+  color: #FFFFFF;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

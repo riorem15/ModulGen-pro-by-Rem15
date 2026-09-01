@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { X, Download, FileText, Loader2, LayoutTemplate, Sparkles, Palette } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
+import { getFormattedPengesahanDate } from '../utils/dateUtils';
 import './PreviewModal.css';
 
 const colorThemes = [
@@ -444,7 +445,7 @@ const PreviewModal = ({ data, onClose }) => {
                   <p style={{ margin: 0, marginTop: '4px' }}>NIP. {data.lampiran?.kepalaSekolahNip || '________________'}</p>
                 </td>
                 <td style={{ width: '50%', textAlign: 'center', border: 'none', paddingTop: '10px' }}>
-                  <p style={{ margin: 0 }}>{data.lampiran?.tanggalPengesahan || 'Serang, 20 Maret 2026'}</p>
+                  <p style={{ margin: 0 }}>{getFormattedPengesahanDate(data.lampiran?.tanggalPengesahan)}</p>
                   <p style={{ margin: 0, fontWeight: 'bold' }}>Guru Mata Pelajaran</p><br /><br /><br /><br />
                   <p style={{ margin: 0, textDecoration: 'underline', fontWeight: 'bold' }}>{data.lampiran?.guruMapelNama || '________________________'}</p>
                   <p style={{ margin: 0, marginTop: '4px' }}>NIP. {data.lampiran?.guruMapelNip || '________________'}</p>
@@ -596,7 +597,7 @@ const PreviewModal = ({ data, onClose }) => {
                   <p style={{ margin: 0, marginTop: '4px' }}>NIP. {data.lampiran?.kepalaSekolahNip || '________________'}</p>
                 </td>
                 <td style={{ width: '50%', textAlign: 'center', border: 'none', paddingTop: '10px' }}>
-                  <p style={{ margin: 0 }}>{data.lampiran?.tanggalPengesahan || 'Serang, 20 Maret 2026'}</p>
+                  <p style={{ margin: 0 }}>{getFormattedPengesahanDate(data.lampiran?.tanggalPengesahan)}</p>
                   <p style={{ margin: 0, fontWeight: 'bold' }}>Guru Mata Pelajaran</p><br /><br /><br /><br />
                   <p style={{ margin: 0, textDecoration: 'underline', fontWeight: 'bold' }}>{data.lampiran?.guruMapelNama || '________________________'}</p>
                   <p style={{ margin: 0, marginTop: '4px' }}>NIP. {data.lampiran?.guruMapelNip || '________________'}</p>

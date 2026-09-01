@@ -1,8 +1,11 @@
 import React from 'react';
 import Editor from './Editor';
-import { FileCheck, ClipboardList, PenTool } from 'lucide-react';
+import { FileCheck, ClipboardList, PenTool, Calendar } from 'lucide-react';
+import { getIndonesianDate } from '../utils/dateUtils';
 
 const SectionLampiran = ({ data, onChange }) => {
+  const todayDateStr = getIndonesianDate();
+
   return (
     <div className="section-container animate-fade-in">
       <div className="section-header">
@@ -60,14 +63,41 @@ const SectionLampiran = ({ data, onChange }) => {
           </h3>
         </div>
 
-        <div className="form-group mb-4" style={{ maxWidth: '320px' }}>
-          <label>Tempat & Tanggal Pengesahan</label>
+        <div className="form-group mb-4" style={{ maxWidth: '400px' }}>
+          <div className="flex items-center justify-between mb-1">
+            <label style={{ margin: 0 }}>Tempat & Tanggal Pengesahan</label>
+            <button
+              type="button"
+              className="btn btn-sm"
+              style={{
+                fontSize: '0.78rem',
+                padding: '0.2rem 0.55rem',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                color: '#2563EB',
+                border: '1px solid rgba(59, 130, 246, 0.25)',
+                borderRadius: '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                cursor: 'pointer',
+                fontWeight: 500
+              }}
+              onClick={() => onChange('tanggalPengesahan', todayDateStr)}
+              title="Isi otomatis dengan tanggal hari ini"
+            >
+              <Calendar size={13} />
+              <span>Gunakan Hari Ini</span>
+            </button>
+          </div>
           <input 
             type="text" 
             value={data.tanggalPengesahan || ''} 
             onChange={(e) => onChange('tanggalPengesahan', e.target.value)} 
-            placeholder="Kota, Tanggal Bulan Tahun" 
+            placeholder={`Contoh: Jakarta, ${todayDateStr}`} 
           />
+          <small style={{ color: 'var(--text-secondary)', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+            *Jika dikosongkan, pratinjau & dokumen akan otomatis menggunakan tanggal hari ini ({todayDateStr}) secara real-time.
+          </small>
         </div>
         
         <div className="form-grid-2">

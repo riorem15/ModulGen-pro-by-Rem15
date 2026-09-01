@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Sparkles, Loader2, Mic, MicOff, Paperclip, Settings, Target, Zap, BookOpen, Lock, Crown, CheckCircle, ShieldAlert } from 'lucide-react';
+import { getIndonesianDate } from '../utils/dateUtils';
 
 const deepLearningSystemPrompt = `Anda adalah MGen AI, pakar perancang Modul Ajar Kurikulum Merdeka dengan Pendekatan DEEP LEARNING (Pembelajaran Mendalam).
 Buatkan modul ajar spesifik, komprehensif, dan berkualitas tinggi berdasarkan instruksi pengguna dengan mematuhi 10 KERANGKA DEEP LEARNING.
@@ -78,7 +79,7 @@ ATURAN FORMAT JSON SANGAT KETAT:
     "kepalaSekolahNip": "NIP Kepala Sekolah",
     "guruMapelNama": "Nama Guru Pengampu",
     "guruMapelNip": "NIP Guru Pengampu",
-    "tanggalPengesahan": "Serang, 20 Maret 2026"
+    "tanggalPengesahan": "Kota/Tempat, " + getIndonesianDate()
   }
 }`;
 

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { 
   Download, FileText, LayoutDashboard, Settings, Moon, Sun, Sparkles, 
-  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, Award, HelpCircle
+  UserCheck, Target, Brain, Tv, Lightbulb, BookOpen, Award, HelpCircle,
+  RotateCcw, CheckCircle2
 } from 'lucide-react';
 import './App.css';
 
@@ -19,6 +20,7 @@ import SectionLampiran from './components/SectionLampiran';
 import PreviewModal from './components/PreviewModal';
 import MGenAiModal from './components/MGenAiModal';
 import TutorialModal from './components/TutorialModal';
+import ResetConfirmModal from './components/ResetConfirmModal';
 
 const STORAGE_KEY = 'modulgen_pro_saved_data_v3';
 const FORMAT_KEY = 'modulgen_pro_format_type_v3';
@@ -88,14 +90,14 @@ const defaultModuleData = {
     inti: { kegiatan: '', durasi: '60' },
     penutup: { kegiatan: '', durasi: '15' },
   },
-  lampiran: {
+    lampiran: {
     lkpd: '',
     asesmen: '',
     kepalaSekolahNama: '',
     kepalaSekolahNip: '',
     guruMapelNama: '',
     guruMapelNip: '',
-    tanggalPengesahan: 'Serang, 20 Maret 2026'
+    tanggalPengesahan: '' // Resolves dynamically to real-time today's date
   }
 };
 
@@ -112,6 +114,8 @@ function App() {
 
   const [showPreview, setShowPreview] = useState(false);
   const [showMGenAi, setShowMGenAi] = useState(false);
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [toastNotification, setToastNotification] = useState(null);
   const [showTutorial, setShowTutorial] = useState(() => {
     return !localStorage.getItem('modulgen_pro_tutorial_seen');
   });
@@ -158,6 +162,103 @@ function App() {
       console.error("Gagal menyimpan ke localStorage:", err);
     }
   }, [moduleData, formatType, activeTab]);
+
+  // Toast Notification Auto-Dismiss
+  useEffect(() => {
+    if (toastNotification) {
+      const timer = setTimeout(() => {
+        setToastNotification(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastNotification]);
+
+  const handleConfirmReset = () => {
+    const freshData = {
+      formatType: formatType,
+      identitas: {
+        penyusun: '',
+        instansi: '',
+        mataPelajaran: '',
+        faseKelas: '',
+        semester: '',
+        materiAjar: '',
+        babSubbab: '',
+        alokasiWaktu: '',
+        fontFamily: 'Poppins',
+        fontSize: '11pt',
+        lineSpacing: '1.5'
+      },
+      identifikasi: {
+        profilLulusan: [
+          "Penalaran Kritis & Pemecahan Masalah",
+          "Kreativitas & Inovasi",
+          "Kolaborasi & Gotong Royong"
+        ],
+        kompetensiAwal: '',
+        pemetaanKebutuhan: ''
+      },
+      desainPembelajaran: {
+        capaianPembelajaran: '',
+        tujuanPembelajaran: '',
+        kktp: '',
+        kategoriKetercapaian: ''
+      },
+      pedagogisDeepLearning: {
+        mindfulLearning: '',
+        meaningfulLearning: '',
+        joyfulLearning: '',
+        modelPembelajaran: 'Problem Based Learning (PBL) terintegrasi Deep Learning Cycle',
+        metodePembelajaran: 'Diskusi kelompok kolaboratif, eksplorasi penyelidikan, dan refleksi bermakna'
+      },
+      mediaSarana: {
+        mediaPembelajaran: '',
+        saranaPrasarana: ''
+      },
+      pemahamanPemantik: {
+        pemahamanBermakna: '',
+        pertanyaanPemantik: ''
+      },
+      inti: {
+        profilPancasila: [],
+        modelPembelajaran: '',
+        metodePembelajaran: '',
+        mediaSaranaPrasarana: '',
+        capaianPembelajaran: '',
+        tujuanPembelajaran: '',
+        pemahamanBermakna: '',
+        pertanyaanPemantik: ''
+      },
+      materiReferensi: {
+        materi: '',
+        referensi: ''
+      },
+      langkah: {
+        pendahuluan: { kegiatan: '', durasi: '15' },
+        inti: { kegiatan: '', durasi: '60' },
+        penutup: { kegiatan: '', durasi: '15' },
+      },
+      lampiran: {
+        lkpd: '',
+        asesmen: '',
+        kepalaSekolahNama: '',
+        kepalaSekolahNip: '',
+        guruMapelNama: '',
+        guruMapelNip: '',
+        tanggalPengesahan: ''
+      }
+    };
+
+    setModuleData(freshData);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(freshData));
+    } catch (err) {
+      console.error("Gagal mereset localStorage:", err);
+    }
+    setActiveTab('identitas');
+    setShowResetModal(false);
+    setToastNotification('Formulir berhasil direset! Silakan mulai mengisi modul baru.');
+  };
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -308,6 +409,16 @@ function App() {
           >
             <Sparkles size={16} />
             <span className="btn-label">MGen AI</span>
+          </button>
+
+          <button 
+            id="tour-btn-reset"
+            className="btn btn-secondary header-btn-reset" 
+            onClick={() => setShowResetModal(true)} 
+            title="Buat Modul Baru / Kosongkan Formulir"
+          >
+            <RotateCcw size={15} color="#F87171" />
+            <span className="btn-label">Buat Baru</span>
           </button>
           
           <button 
@@ -485,6 +596,29 @@ function App() {
           onClose={() => setShowTutorial(false)}
           onNavigateTab={(tab) => setActiveTab(tab)}
         />
+      )}
+
+      {/* Reset / Buat Baru Confirmation Modal */}
+      <ResetConfirmModal 
+        isOpen={showResetModal}
+        onClose={() => setShowResetModal(false)}
+        onConfirm={handleConfirmReset}
+      />
+
+      {/* Toast Notification */}
+      {toastNotification && (
+        <div className="toast-notification-banner animate-slide-down">
+          <CheckCircle2 size={18} color="#10B981" />
+          <span className="toast-text">{toastNotification}</span>
+          <button 
+            type="button" 
+            className="toast-close-btn" 
+            onClick={() => setToastNotification(null)}
+            title="Tutup Notifikasi"
+          >
+            ×
+          </button>
+        </div>
       )}
     </div>
   );
