@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, Sparkles, BookOpen, Layers } from 'lucide-react';
+import { Settings, Brain, BookOpen, Layers } from 'lucide-react';
 
 const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
   return (
@@ -27,7 +27,7 @@ const SectionIdentitas = ({ data, onChange, formatType, onFormatChange }) => {
               onClick={() => onFormatChange('deep_learning')}
             >
               <div className="format-choice-icon">
-                <Sparkles size={18} />
+                <Brain size={19} />
               </div>
               <div className="format-choice-info">
                 <div className="format-choice-title">Modul Deep Learning</div>

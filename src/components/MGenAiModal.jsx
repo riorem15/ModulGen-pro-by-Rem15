@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Loader2, Mic, MicOff, Paperclip, Settings, Target, Zap, BookOpen, Lock, Crown, CheckCircle, ShieldAlert } from 'lucide-react';
+import { X, Sparkles, Loader2, Mic, MicOff, Paperclip, Settings, Target, Zap, BookOpen, Lock, Crown, CheckCircle, ShieldAlert, Brain } from 'lucide-react';
 import { getIndonesianDate } from '../utils/dateUtils';
 
 const deepLearningSystemPrompt = `Anda adalah MGen AI, pakar perancang Modul Ajar Kurikulum Merdeka dengan Pendekatan DEEP LEARNING (Pembelajaran Mendalam).
@@ -484,7 +484,7 @@ Instruksi Pengguna: ${prompt}`;
                   gap: '6px'
                 }}
               >
-                <Sparkles size={15} /> Deep Learning (10 Kerangka)
+                <Brain size={15} /> Deep Learning (10 Kerangka)
               </button>
               <button
                 type="button"
