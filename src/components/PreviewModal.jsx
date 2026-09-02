@@ -611,12 +611,11 @@ const PreviewModal = ({ data, onClose }) => {
   );
 
   return (
-    <div className="modal-overlay preview-overlay">
+    <div className="modal-overlay">
       <div className="modal-content preview-modal-content">
         {/* Top Header */}
-        <div className="modal-header preview-header-top">
+        <div className="preview-header-top">
           <div className="flex items-center gap-2">
-            <FileText size={20} color={currentTheme.primary} />
             <h2 className="preview-modal-title">
               Pratinjau Modul Ajar
             </h2>
@@ -667,8 +666,8 @@ const PreviewModal = ({ data, onClose }) => {
             </div>
           </div>
 
-          {/* Export Action Buttons */}
-          <div className="preview-actions-row">
+          {/* Export Action Buttons (Desktop & Tablet) */}
+          <div className="preview-actions-row preview-actions-desktop">
             <button 
               className="btn btn-primary preview-btn-export" 
               onClick={handleDownloadPDF} 
@@ -694,6 +693,26 @@ const PreviewModal = ({ data, onClose }) => {
               {layoutType === 'kotak' ? renderKotakCanvas() : renderTabelCanvas()}
             </div>
           </div>
+        </div>
+
+        {/* Mobile Sticky Bottom Download Bar */}
+        <div className="preview-mobile-bottom-bar">
+          <button 
+            className="btn btn-primary preview-mobile-btn" 
+            onClick={handleDownloadPDF} 
+            disabled={isExporting} 
+            style={{ backgroundColor: currentTheme.primary, borderColor: currentTheme.primary }}
+          >
+            {isExporting ? <Loader2 className="animate-spin" size={15}/> : <Download size={15} />} Unduh PDF
+          </button>
+          <button 
+            className="btn btn-secondary preview-mobile-btn" 
+            onClick={handleDownloadWord} 
+            disabled={isExporting} 
+            style={{ backgroundColor: '#2B579A', color: 'white', borderColor: '#2B579A' }}
+          >
+            {isExporting ? <Loader2 className="animate-spin" size={15}/> : <FileText size={15} />} Unduh Word (.doc)
+          </button>
         </div>
       </div>
     </div>

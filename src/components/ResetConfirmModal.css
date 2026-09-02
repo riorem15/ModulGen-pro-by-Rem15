@@ -163,3 +163,22 @@
 .animate-scale-up {
   animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+@media (max-width: 480px) {
+  .reset-modal-card {
+    padding: 1.15rem 1rem;
+    border-radius: 12px;
+  }
+  .reset-modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .reset-btn-cancel, .reset-btn-confirm {
+    width: 100%;
+    justify-content: center;
+    padding: 0.55rem 0.5rem;
+    font-size: 0.84rem;
+  }
+}
+
