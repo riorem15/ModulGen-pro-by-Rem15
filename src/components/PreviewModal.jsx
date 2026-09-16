@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { X, Download, FileText, Loader2, LayoutTemplate, Sparkles, Palette } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { getFormattedPengesahanDate } from '../utils/dateUtils';
+import { exportModulAjarDocx } from '../utils/docxExport';
 import './PreviewModal.css';
 
 const colorThemes = [
@@ -176,44 +177,10 @@ const PreviewModal = ({ data, onClose }) => {
   const handleDownloadWord = async () => {
     setIsExporting(true);
     try {
-      const htmlContent = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-        <head>
-          <meta charset='utf-8'>
-          <title>Export Modul Ajar Word</title>
-          <style>
-            @page { margin: 20mm; size: A4 portrait; }
-            body { font-family: '${globalStyles.fontFamily}', Arial, sans-serif; font-size: ${globalStyles.fontSize}; line-height: ${globalStyles.lineHeight}; color: #000; }
-            h1 { font-size: 16pt; font-weight: bold; text-align: center; margin-bottom: 4px; color: ${currentTheme.primary}; }
-            h2 { font-size: 13pt; font-weight: bold; text-align: center; margin-top: 0; margin-bottom: 16px; color: #1e293b; }
-            h3 { font-size: 12pt; font-weight: bold; border-bottom: 2pt solid ${currentTheme.primary}; padding-bottom: 4px; margin-top: 20px; margin-bottom: 12px; color: ${currentTheme.primary}; }
-            h4 { font-size: 11pt; font-weight: bold; margin-top: 10px; margin-bottom: 6px; color: ${currentTheme.primary}; }
-            table { border-collapse: collapse; width: 100%; margin-bottom: 16px; border: 1px solid ${currentTheme.border}; }
-            th { background-color: ${currentTheme.tableHeaderBg}; color: ${currentTheme.tableHeaderColor}; border: 1px solid ${currentTheme.border}; padding: 6px 8px; font-weight: bold; }
-            td { border: 1px solid ${currentTheme.border}; padding: 6px 8px; vertical-align: top; font-size: inherit; }
-            .no-border, .no-border td, .no-border th { border: none !important; }
-            .theme-card-banner { background-color: ${currentTheme.pilarBg}; border-left: 4pt solid ${currentTheme.primary}; padding: 8px 12px; margin-bottom: 10px; }
-            p { margin-bottom: 8px; text-align: justify; }
-            ul, ol { margin-left: 24px; margin-bottom: 8px; }
-            li { margin-bottom: 4px; }
-          </style>
-        </head>
-        <body>
-          ${printRef.current.innerHTML}
-        </body>
-        </html>
-      `;
-      const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
-      const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(htmlContent);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `Modul_Ajar_${data.identitas?.mataPelajaran || 'Deep_Learning'}.doc`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      await exportModulAjarDocx(data, layoutType, currentTheme);
     } catch (err) {
-      console.error(err);
-      alert('Gagal membuat Word Document.');
+      console.error('Export DOCX error:', err);
+      alert('Gagal membuat dokumen Word (.docx): ' + (err.message || 'Terjadi kesalahan sistem.'));
     } finally {
       setIsExporting(false);
     }
@@ -682,7 +649,7 @@ const PreviewModal = ({ data, onClose }) => {
               disabled={isExporting} 
               style={{ backgroundColor: '#2B579A', color: 'white', borderColor: '#2B579A' }}
             >
-              {isExporting ? <Loader2 className="animate-spin" size={14}/> : <FileText size={14} />} Unduh Word (.doc)
+              {isExporting ? <Loader2 className="animate-spin" size={14}/> : <FileText size={14} />} Unduh Word (.docx)
             </button>
           </div>
         </div>
@@ -711,7 +678,7 @@ const PreviewModal = ({ data, onClose }) => {
             disabled={isExporting} 
             style={{ backgroundColor: '#2B579A', color: 'white', borderColor: '#2B579A' }}
           >
-            {isExporting ? <Loader2 className="animate-spin" size={15}/> : <FileText size={15} />} Unduh Word (.doc)
+            {isExporting ? <Loader2 className="animate-spin" size={15}/> : <FileText size={15} />} Unduh Word (.docx)
           </button>
         </div>
       </div>

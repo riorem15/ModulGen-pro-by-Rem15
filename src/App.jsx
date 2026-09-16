@@ -319,7 +319,13 @@ function App() {
       ...prev,
       formatType: data.formatType || prev.formatType,
       identitas: { ...prev.identitas, ...data.identitas },
-      identifikasi: { ...prev.identifikasi, ...data.identifikasi },
+      identifikasi: { 
+        ...prev.identifikasi, 
+        ...data.identifikasi,
+        profilLulusan: Array.isArray(data.identifikasi?.profilLulusan) && data.identifikasi.profilLulusan.length > 0 
+          ? data.identifikasi.profilLulusan 
+          : prev.identifikasi.profilLulusan
+      },
       desainPembelajaran: { 
         ...prev.desainPembelajaran, 
         ...data.desainPembelajaran,
@@ -339,7 +345,13 @@ function App() {
         pemahamanBermakna: data.pemahamanPemantik?.pemahamanBermakna || data.inti?.pemahamanBermakna || prev.pemahamanPemantik.pemahamanBermakna,
         pertanyaanPemantik: data.pemahamanPemantik?.pertanyaanPemantik || data.inti?.pertanyaanPemantik || prev.pemahamanPemantik.pertanyaanPemantik,
       },
-      inti: { ...prev.inti, ...data.inti },
+      inti: { 
+        ...prev.inti, 
+        ...data.inti,
+        profilPancasila: Array.isArray(data.inti?.profilPancasila) && data.inti.profilPancasila.length > 0 
+          ? data.inti.profilPancasila 
+          : prev.inti.profilPancasila
+      },
       materiReferensi: { ...prev.materiReferensi, ...data.materiReferensi },
       langkah: {
         pendahuluan: { ...prev.langkah.pendahuluan, ...data.langkah?.pendahuluan },
@@ -348,6 +360,15 @@ function App() {
       },
       lampiran: { ...prev.lampiran, ...data.lampiran }
     }));
+
+    if (data.formatType && data.formatType !== formatType) {
+      setFormatType(data.formatType);
+    }
+
+    setToastNotification("✨ Seluruh komponen modul ajar berhasil digenerate oleh MGen AI!");
+    setTimeout(() => {
+      setToastNotification(null);
+    }, 5000);
   };
 
   const getTabsForFormat = (fmt) => {

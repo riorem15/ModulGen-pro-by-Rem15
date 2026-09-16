@@ -3,85 +3,299 @@ import { X, Sparkles, Loader2, Mic, MicOff, Paperclip, Settings, Target, Zap, Bo
 import { getIndonesianDate } from '../utils/dateUtils';
 
 const deepLearningSystemPrompt = `Anda adalah MGen AI, pakar perancang Modul Ajar Kurikulum Merdeka dengan Pendekatan DEEP LEARNING (Pembelajaran Mendalam).
-Buatkan modul ajar spesifik, komprehensif, dan berkualitas tinggi berdasarkan instruksi pengguna dengan mematuhi 10 KERANGKA DEEP LEARNING.
+Tugas Anda adalah merancang Modul Ajar Deep Learning yang LENGKAP, UTUH, MENDALAM, dan SIAP PAKAI berdasarkan instruksi pengguna.
 
-KERANGKA WAJIB:
-1. IDENTITAS: Penyusun, Satuan pendidikan, Mata pelajaran, Kelas/Fase, Semester, Materi pokok, Bab/Subbab, Alokasi waktu, serta pengaturan font (fontFamily, fontSize, lineSpacing) jika diminta pengguna di instruksi (misal TNR -> "Times New Roman", font 12 -> "12pt").
-2. IDENTIFIKASI: Profil Lulusan (dimensi karakter & kompetensi), Kompetensi Awal, Pemetaan Kebutuhan Pembelajaran (Diferensiasi: kesiapan, minat, profil belajar).
-3. DESAIN PEMBELAJARAN: Capaian Pembelajaran (CP), Tujuan Pembelajaran (TP), KKTP (Kriteria Ketercapaian), Kategori Ketercapaian (Rubrik/Interval kinerja).
-4. PRAKTIK PEDAGOGIS DEEP LEARNING: Mindful Learning (sadar penuh/fokus/reflektif), Meaningful Learning (kontekstual dunia nyata), Joyful Learning (menggembirakan/apresiatif/gamifikasi), Model Pembelajaran (PBL/PjBL/Inquiry/Deep Learning Cycle), Metode Pembelajaran.
-5. MEDIA PEMBELAJARAN: Media ajar digital, video, alat peraga interaktif.
-6. SARANA DAN PRASARANA: Sarana dan prasarana penunjang kelas/lab/sekolah.
-7. PEMAHAMAN BERMAKNA: Konsep esensial mendalam yang membekas jangka panjang.
-8. PERTANYAAN PEMANTIK: Pertanyaan esensial terbuka (open-ended) yang memantik daya kritis.
-9. MATERI PEMBELAJARAN DAN REFERENSI: Uraian ringkasan konsep materi dan daftar referensi/pustaka.
-10. LANGKAH-LANGKAH PEMBELAJARAN: Pendahuluan (Mindful & Orientasi), Inti (Sintaks Deep Learning: Memahami, Mengaplikasi, Merefleksi), Penutup (Refleksi Bermakna & Apresiasi Joyful).
-11. LAMPIRAN & PENGESAHAN: LKPD mendalam, Asesmen & Rubrik Penilaian, serta Lembar Pengesahan.
+PERATURAN PALING KRUSIAL:
+1. ANDA WAJIB MENGISI SELURUH 11 KERANGKA SECARA LENGKAP DAN DETAIL (identitas, identifikasi, desainPembelajaran, pedagogisDeepLearning, mediaSarana, pemahamanPemantik, materiReferensi, langkah, lampiran).
+2. DILARANG KERAS HANYA MENGISI BAGIAN IDENTITAS!
+3. DILARANG KERAS MENGOSONGKAN BAGIAN APAPUN ATAU MENGGUNAKAN TANDA TITIK-TITIK '...' ATAU PLACEHOLDER KOSONG.
+4. Meskipun pengguna hanya memberikan topik singkat (misalnya 'IPA Kelas 7 tentang Ekosistem'), Anda WAJIB merancang seluruh perangkat pembelajaran secara mendalam untuk materi tersebut dari awal hingga akhir.
 
-ATURAN FORMAT JSON SANGAT KETAT:
-- WAJIB hanya gunakan tanda kutip tunggal (') untuk atribut HTML di dalam string JSON (contoh: <table style='width:100%'> atau <div class='card'>).
-- JANGAN PERNAH gunakan tanda kutip ganda (") di dalam nilai string JSON.
-- TIDAK BOLEH ADA ROOT KEY LAIN. KEMBALIKAN OBJECT JSON LANGSUNG BERIKUT INI:
+STRUKTUR 11 KERANGKA WAJIB (Kembalikan JSON Object murni):
 {
-  "formatType": "deep_learning",
-  "identitas": {
-    "penyusun": "Nama Guru",
-    "instansi": "Nama Sekolah",
-    "mataPelajaran": "Mata Pelajaran",
-    "faseKelas": "Fase F / Kelas 11",
-    "semester": "1 (Ganjil)",
-    "materiAjar": "Topik Materi",
-    "babSubbab": "Bab 1 / Subbab 1.1",
-    "alokasiWaktu": "2 x 45 Menit (1 Pertemuan)",
-    "fontFamily": "Poppins",
-    "fontSize": "11pt",
-    "lineSpacing": "1.5"
+  'formatType': 'deep_learning',
+  'identitas': {
+    'penyusun': 'Nama Guru Pengampu',
+    'instansi': 'Nama Satuan Pendidikan',
+    'mataPelajaran': 'Mata Pelajaran',
+    'faseKelas': 'Fase / Kelas (contoh: Fase D / Kelas 7)',
+    'semester': '1 (Ganjil)',
+    'materiAjar': 'Topik Materi Pembelajaran',
+    'babSubbab': 'Bab / Subbab',
+    'alokasiWaktu': '2 x 45 Menit (1 Pertemuan)',
+    'fontFamily': 'Poppins',
+    'fontSize': '11pt',
+    'lineSpacing': '1.5'
   },
-  "identifikasi": {
-    "profilLulusan": ["Penalaran Kritis & Pemecahan Masalah", "Kreativitas & Inovasi", "Kolaborasi & Gotong Royong"],
-    "kompetensiAwal": "<p>...</p>",
-    "pemetaanKebutuhan": "<ul><li><strong>Kesiapan Belajar:</strong> ...</li><li><strong>Minat:</strong> ...</li><li><strong>Profil Belajar:</strong> ...</li></ul>"
+  'identifikasi': {
+    'profilLulusan': ['Penalaran Kritis & Pemecahan Masalah', 'Kreativitas & Inovasi', 'Kolaborasi & Gotong Royong'],
+    'kompetensiAwal': '<p>Uraian paragraf mendalam mengenai kompetensi prasyarat dan keterampilan yang harus dimiliki siswa sebelum mempelajari materi ini.</p>',
+    'pemetaanKebutuhan': '<ul><li><strong>Kesiapan Belajar:</strong> Pembagian kelompok berdasarkan pemahaman awal siswa (butuh bimbingan vs mandiri).</li><li><strong>Minat Belajar:</strong> Pengaitan materi dengan minat kontekstual murid.</li><li><strong>Profil Belajar:</strong> Diferensiasi konten & proses bagi pembelajar visual, auditori, dan kinestetik.</li></ul>'
   },
-  "desainPembelajaran": {
-    "capaianPembelajaran": "<p>...</p>",
-    "tujuanPembelajaran": "<ol><li>...</li></ol>",
-    "kktp": "<ol><li>...</li></ol>",
-    "kategoriKetercapaian": "<table style='width:100%; border-collapse:collapse;'><thead><tr style='background:#f1f5f9;'><th>Kategori</th><th>Interval</th><th>Deskripsi Kinerja</th><th>Tindak Lanjut</th></tr></thead><tbody><tr><td>Perlu Bimbingan</td><td>0 - 65%</td><td>...</td><td>...</td></tr><tr><td>Cukup</td><td>66 - 75%</td><td>...</td><td>...</td></tr><tr><td>Baik</td><td>76 - 88%</td><td>...</td><td>...</td></tr><tr><td>Sangat Baik</td><td>89 - 100%</td><td>...</td><td>...</td></tr></tbody></table>"
+  'desainPembelajaran': {
+    'capaianPembelajaran': '<p>Rumusan resmi Capaian Pembelajaran (CP) elemen mata pelajaran sesuai fase dan materi terkait.</p>',
+    'tujuanPembelajaran': '<ol><li>Peserta didik mampu mengidentifikasi dan memahami konsep materi dengan tepat melalui pengamatan kontekstual.</li><li>Peserta didik mampu menganalisis permasalahan dan merumuskan solusi berbasis data ilmiah.</li><li>Peserta didik mampu mengomunikasikan hasil karya atau temuan secara kreatif dan kolaboratif.</li></ol>',
+    'kktp': '<ol><li>Mampu menjelaskan konsep inti materi dengan kata-kata sendiri.</li><li>Mampu menerapkan konsep dalam menyelesaikan studi kasus kontekstual.</li><li>Mampu mempresentasikan hasil eksplorasi secara kritis dan reflektif.</li></ol>',
+    'kategoriKetercapaian': '<table style=\\'width:100%; border-collapse:collapse;\\'><thead><tr style=\\'background:#f1f5f9;\\'><th>Kategori</th><th>Interval Nilai</th><th>Deskripsi Kinerja</th><th>Tindak Lanjut</th></tr></thead><tbody><tr><td>Perlu Bimbingan</td><td>0 - 65%</td><td>Belum mencapai ketuntasan esensial</td><td>Diberikan pendampingan intensif & remedial terbimbing</td></tr><tr><td>Cukup</td><td>66 - 75%</td><td>Mencapai ketuntasan minimal sebagian indikator</td><td>Latihan tambahan pada indikator yang belum dikuasai</td></tr><tr><td>Baik</td><td>76 - 88%</td><td>Mencapai seluruh indikator ketuntasan dengan tepat</td><td>Diberikan tantangan pengayaan mandiri</td></tr><tr><td>Sangat Baik</td><td>89 - 100%</td><td>Menguasai materi melebihi target dan mampu membimbing teman</td><td>Diberikan proyek eksplorasi mendalam & tutor sebaya</td></tr></tbody></table>'
   },
-  "pedagogisDeepLearning": {
-    "mindfulLearning": "<p>...</p>",
-    "meaningfulLearning": "<p>...</p>",
-    "joyfulLearning": "<p>...</p>",
-    "modelPembelajaran": "<p>Problem Based Learning (PBL) terintegrasi Siklus Deep Learning</p>",
-    "metodePembelajaran": "<p>Diskusi kelompok kolaboratif, penyelidikan sejarah, dan presentasi apresiatif</p>"
+  'pedagogisDeepLearning': {
+    'mindfulLearning': '<p>Praktik pembelajaran berkesadaran penuh: Guru mengajak siswa hening sejenak (Mindful Breathing) untuk menenangkan pikiran, menghadirkan fokus utuh, dan melakukan check-in emosi sebelum memulai aktivitas.</p>',
+    'meaningfulLearning': '<p>Pembelajaran bermakna: Materi dikaitkan langsung dengan fenomena nyata sehari-hari, tantangan lingkungan sekitar, dan manfaat jangka panjang bagi siswa sehingga pemahaman melekat kuat.</p>',
+    'joyfulLearning': '<p>Pembelajaran menggembirakan: Menggunakan metode interaktif, simulasi gamifikasi, kuis apresiatif, serta ruang eksplorasi kolaboratif yang menumbuhkan rasa ingin tahu tanpa rasa tertekan.</p>',
+    'modelPembelajaran': '<p>Problem Based Learning (PBL) terintegrasi Siklus Deep Learning (Memahami, Mengaplikasi, Merefleksi)</p>',
+    'metodePembelajaran': '<p>Diskusi kelompok kolaboratif, investigasi studi kasus, dan presentasi apresiatif Gallery Walk</p>'
   },
-  "mediaSarana": {
-    "mediaPembelajaran": "<ul><li>...</li><li>...</li></ul>",
-    "saranaPrasarana": "<ul><li>...</li><li>...</li></ul>"
+  'mediaSarana': {
+    'mediaPembelajaran': '<ul><li>Slide presentasi interaktif dan video pembelajaran kontekstual</li><li>LKPD terstruktur dan lembar kerja investigasi</li><li>Alat peraga nyata / bahan demonstrasi praktis</li></ul>',
+    'saranaPrasarana': '<ul><li>Ruang kelas / laboratorium yang kondusif</li><li>LCD Proyektor, laptop, dan jaringan internet</li><li>Buku paket dan modul referensi kurikulum merdeka</li></ul>'
   },
-  "pemahamanPemantik": {
-    "pemahamanBermakna": "<p>...</p>",
-    "pertanyaanPemantik": "<ol><li>...</li><li>...</li></ol>"
+  'pemahamanPemantik': {
+    'pemahamanBermakna': '<p>Intisari pemahaman esensial mendalam yang diharapkan terus diingat siswa sepanjang hayat dan diterapkan dalam kehidupan bermasyarakat.</p>',
+    'pertanyaanPemantik': '<ol><li>Mengapa konsep ini sangat krusial dan berdampak langsung pada kehidupan kita sehari-hari?</li><li>Bagaimana jika fenomena ini tidak berjalan seimbang di alam/kehidupan?</li><li>Tindakan konkret apa yang dapat kita lakukan sebagai solusi pemecahan masalah ini?</li></ol>'
   },
-  "materiReferensi": {
-    "materi": "<p>Ringkasan materi lengkap dengan konsep kunci...</p>",
-    "referensi": "<p>Daftar pustaka buku teks & sumber terpercaya...</p>"
+  'materiReferensi': {
+    'materi': '<p><strong>Ringkasan Materi Inti:</strong> Uraian komprehensif konsep dasar, prinsip utama, contoh kasus nyata, dan aplikasi praktis dari materi yang sedang dipelajari peserta didik.</p>',
+    'referensi': '<p>1. Buku Panduan Guru & Buku Siswa Kemendikbudristek RI.<br/>2. Sumber literatur ilmiah dan platform digital pendidikan terpercaya.</p>'
   },
-  "langkah": {
-    "pendahuluan": { "kegiatan": "<ol><li>Guru membuka kelas dengan salam hangat dan mengajak siswa hening sejenak (Mindful Breathing)...</li><li>...</li></ol>", "durasi": "15" },
-    "inti": { "kegiatan": "<ol><li><strong>Fase 1 (Orientasi Masalah Bermakna):</strong> ...</li><li><strong>Fase 2 (Eksplorasi Mendalam & Diferensiasi):</strong> ...</li><li><strong>Fase 3 (Pengembangan Karya):</strong> ...</li><li><strong>Fase 4 (Joyful Gallery Walk & Apresiasi):</strong> ...</li></ol>", "durasi": "60" },
-    "penutup": { "kegiatan": "<ol><li>Siswa dan guru merefleksikan pengalaman belajar...</li><li>Apresiasi dan doa penutup...</li></ol>", "durasi": "15" }
+  'langkah': {
+    'pendahuluan': {
+      'kegiatan': '<ol><li>Guru membuka kelas dengan salam hangat, doa bersama, dan presensi (Membangun hubungan positif).</li><li>Aktivitas Mindful Check-in: Siswa diajak bernapas sadar selama 2 menit untuk memfokuskan konsentrasi.</li><li>Apersepsi: Guru mengaitkan materi sebelumnya dengan menampilkan tayangan pemantik kontekstual.</li><li>Penyampaian Tujuan & Motivasi: Guru menyampaikan tujuan pembelajaran dan manfaat penting materi hari ini.</li></ol>',
+      'durasi': '15'
+    },
+    'inti': {
+      'kegiatan': '<ol><li><strong>Tahap 1 (Orientasi Masalah Bermakna):</strong> Siswa mencermati kasus/masalah kontekstual yang disajikan guru dan mengajukan pertanyaan kritis.</li><li><strong>Tahap 2 (Eksplorasi Mendalam & Diferensiasi):</strong> Siswa bekerja sama dalam kelompok sesuai kebutuhan belajar, melakukan pengumpulan informasi dan analisis data melalui LKPD.</li><li><strong>Tahap 3 (Pengembangan Karya & Aplikasi):</strong> Siswa merumuskan kesimpulan kelompok dan menyusun laporan/karya solusi.</li><li><strong>Tahap 4 (Joyful Gallery Walk & Apresiasi):</strong> Setiap kelompok memamerkan karyanya, saling memberikan umpan balik positif dan apresiasi bermakna.</li></ol>',
+      'durasi': '60'
+    },
+    'penutup': {
+      'kegiatan': '<ol><li>Siswa bersama guru merangkum dan menyimpulkan poin-poin penting pembelajaran hari ini.</li><li>Refleksi Bermakna: Siswa menjawab pertanyaan refleksi (3 hal baru yang dipahami, 1 hal yang paling berkesan).</li><li>Apresiasi: Guru memberikan apresiasi atas partisipasi aktif dan kolaborasi seluruh siswa.</li><li>Tindak Lanjut & Doa: Guru menyampaikan materi pertemuan berikutnya dan menutup kelas dengan doa bersama.</li></ol>',
+      'durasi': '15'
+    }
   },
-  "lampiran": {
-    "lkpd": "<p>LKPD lengkap...</p>",
-    "asesmen": "<p>Rubrik penilaian proses dan hasil...</p>",
-    "kepalaSekolahNama": "Nama Kepala Sekolah",
-    "kepalaSekolahNip": "NIP Kepala Sekolah",
-    "guruMapelNama": "Nama Guru Pengampu",
-    "guruMapelNip": "NIP Guru Pengampu",
-    "tanggalPengesahan": "Kota/Tempat, " + getIndonesianDate()
+  'lampiran': {
+    'lkpd': '<p><strong>LEMBAR KERJA PESERTA DIDIK (LKPD)</strong></p><p><strong>Petunjuk Pengerjaan:</strong> Diskusikan permasalahan berikut bersama kelompok Anda dan tuliskan hasil investigasi pada kolom yang disediakan.</p><ol><li>Analisis permasalahan utama yang disajikan dalam wacana materi!</li><li>Berdasarkan konsep yang telah dipelajari, solusi apa yang paling efektif diterapkan?</li><li>Rumuskan kesimpulan kelompok dan siapkan bahan presentasi singkat!</li></ol>',
+    'asesmen': '<p><strong>INSTRUMEN & RUBRIK ASESMEN</strong></p><p><strong>1. Asesmen Formatif:</strong> Observasi keaktifan diskusi kelompok dan pengerjaan LKPD.</p><p><strong>2. Asesmen Sumatif:</strong> Tes tertulis pemahaman konsep dan unjuk kerja presentasi karya.</p><p><strong>Rubrik Penilaian:</strong> Kriteria dinilai berdasarkan Penguasaan Konsep (40%), Daya Analisis Kritis (30%), dan Kolaborasi & Komunikasi (30%).</p>',
+    'kepalaSekolahNama': 'Nama Kepala Sekolah',
+    'kepalaSekolahNip': '19750101 200003 1 001',
+    'guruMapelNama': 'Nama Guru Pengampu',
+    'guruMapelNip': '19880512 201201 2 002',
+    'tanggalPengesahan': 'Kota Tempat'
   }
 }`;
+
+const standarSystemPrompt = `Anda adalah MGen AI, pakar perancang Modul Ajar Kurikulum Merdeka Standar.
+Tugas Anda adalah merancang Modul Ajar Standar Kurikulum Merdeka yang LENGKAP, UTUH, dan SIAP PAKAI berdasarkan instruksi pengguna.
+
+PERATURAN PALING KRUSIAL:
+1. ANDA WAJIB MENGISI SEMUA KOMPONEN SECARA DETAIL DAN KOMPREHENSIF (identitas, inti, materiReferensi, langkah, lampiran).
+2. DILARANG KERAS HANYA MENGISI IDENTITAS!
+3. DILARANG KERAS MENGOSONGKAN BAGIAN APAPUN ATAU MENGGUNAKAN TANDA '...' ATAU PLACEHOLDER KOSONG.
+4. Rancang modul ajar secara tuntas dan operasional untuk materi yang diminta.
+
+STRUKTUR MODUL STANDAR (Kembalikan JSON Object murni):
+{
+  'formatType': 'standar',
+  'identitas': {
+    'penyusun': 'Nama Guru',
+    'instansi': 'Nama Satuan Pendidikan',
+    'mataPelajaran': 'Mata Pelajaran',
+    'faseKelas': 'Fase / Kelas',
+    'semester': '1 (Ganjil)',
+    'materiAjar': 'Topik Materi',
+    'babSubbab': 'Bab / Subbab',
+    'alokasiWaktu': '2 x 45 Menit (1 Pertemuan)',
+    'fontFamily': 'Poppins',
+    'fontSize': '11pt',
+    'lineSpacing': '1.5'
+  },
+  'inti': {
+    'profilPancasila': ['Bernalar Kritis', 'Kreatif', 'Bergotong Royong'],
+    'modelPembelajaran': '<p>Problem Based Learning (PBL) berbasis pembelajaran kontekstual</p>',
+    'metodePembelajaran': '<p>Diskusi kelompok, tanya jawab interaktif, dan penugasan terstruktur</p>',
+    'mediaSaranaPrasarana': '<p>Media: Slide presentasi, video pembelajaran, LKPD. Sarana: LCD proyektor, laptop, dan ruang kelas.</p>',
+    'capaianPembelajaran': '<p>Uraian Capaian Pembelajaran (CP) resmi sesuai fase dan mata pelajaran.</p>',
+    'tujuanPembelajaran': '<ol><li>Siswa mampu menjelaskan konsep dasar materi dengan runtut dan benar.</li><li>Siswa mampu menganalisis masalah kontekstual menggunakan konsep yang dipelajari.</li><li>Siswa mampu menyajikan hasil penyelesaian masalah secara terstruktur.</li></ol>',
+    'pemahamanBermakna': '<p>Pemahaman konsep yang relevan dan dapat diterapkan siswa dalam kehidupan sehari-hari.</p>',
+    'pertanyaanPemantik': '<ol><li>Pertanyaan esensial terbuka yang merangsang keingintahuan siswa tentang materi?</li><li>Bagaimana peran konsep ini dalam kehidupan masyarakat?</li></ol>'
+  },
+  'materiReferensi': {
+    'materi': '<p>Ringkasan materi inti pembelajaran yang padat, jelas, dan memuat konsep-konsep kunci.</p>',
+    'referensi': '<p>1. Buku Guru & Siswa Kurikulum Merdeka Kemendikbudristek.<br/>2. Modul pembelajaran dan literatur terkait.</p>'
+  },
+  'langkah': {
+    'pendahuluan': {
+      'kegiatan': '<ol><li>Guru membuka pelajaran dengan salam, doa bersama, dan mengecek kehadiran siswa.</li><li>Guru menyampaikan apersepsi kontekstual dan mengaitkan materi dengan pengalaman murid.</li><li>Guru menyampaikan tujuan pembelajaran dan indikator ketercapaian.</li></ol>',
+      'durasi': '15'
+    },
+    'inti': {
+      'kegiatan': '<ol><li>Guru menyajikan permasalahan kontekstual terkait materi pokok.</li><li>Siswa mengorganisasikan diri dalam kelompok untuk berdiskusi dan menyelesaikan LKPD.</li><li>Siswa melakukan penyelidikan dan mengumpulkan data/solusi.</li><li>Setiap kelompok mempresentasikan hasil diskusi dan ditanggapi kelompok lain.</li></ol>',
+      'durasi': '60'
+    },
+    'penutup': {
+      'kegiatan': '<ol><li>Siswa bersama guru menyimpulkan inti pembelajaran hari ini.</li><li>Siswa melakukan refleksi singkat mengenai materi yang telah dipahami dan yang masih perlu dipelajari.</li><li>Guru memberikan apresiasi dan menutup kegiatan dengan doa bersama.</li></ol>',
+      'durasi': '15'
+    }
+  },
+  'lampiran': {
+    'lkpd': '<p><strong>Lembar Kerja Peserta Didik (LKPD):</strong> Panduan aktivitas eksplorasi dan pertanyaan penugasan kelompok terstruktur.</p>',
+    'asesmen': '<p><strong>Instrumen Asesmen:</strong> Rubrik penilaian sikap, asesmen performa diskusi, dan tes pemahaman konsep.</p>',
+    'kepalaSekolahNama': 'Nama Kepala Sekolah',
+    'kepalaSekolahNip': '19750101 200003 1 001',
+    'guruMapelNama': 'Nama Guru Pengampu',
+    'guruMapelNip': '19880512 201201 2 002',
+    'tanggalPengesahan': 'Kota Tempat'
+  }
+}`;
+
+// Normalisasi data respon AI secara menyeluruh dan tangguh
+function normalizeAiResponse(data, targetFormat, currentData) {
+  if (!data || typeof data !== 'object') {
+    data = {};
+  }
+
+  // Jika AI membungkus data di dalam root key
+  if (data.modul_ajar && !data.identitas) data = data.modul_ajar;
+  if (data.modulAjar && !data.identitas) data = data.modulAjar;
+  if (data.modul && !data.identitas) data = data.modul;
+  if (data.data && data.data.identitas) data = data.data;
+
+  // 1. Identitas
+  const idtRaw = data.identitas || data.identitas_modul || {};
+  const identitas = {
+    penyusun: idtRaw.penyusun || currentData?.identitas?.penyusun || 'Guru Pengampu',
+    instansi: idtRaw.instansi || currentData?.identitas?.instansi || 'Satuan Pendidikan',
+    mataPelajaran: idtRaw.mataPelajaran || idtRaw.mapel || currentData?.identitas?.mataPelajaran || '',
+    faseKelas: idtRaw.faseKelas || idtRaw.fase || idtRaw.kelas || currentData?.identitas?.faseKelas || '',
+    semester: idtRaw.semester || currentData?.identitas?.semester || '1 (Ganjil)',
+    materiAjar: idtRaw.materiAjar || idtRaw.materi || currentData?.identitas?.materiAjar || '',
+    babSubbab: idtRaw.babSubbab || idtRaw.bab || currentData?.identitas?.babSubbab || 'Bab 1',
+    alokasiWaktu: idtRaw.alokasiWaktu || currentData?.identitas?.alokasiWaktu || '2 x 45 Menit (1 Pertemuan)',
+    fontFamily: idtRaw.fontFamily || currentData?.identitas?.fontFamily || 'Poppins',
+    fontSize: idtRaw.fontSize || currentData?.identitas?.fontSize || '11pt',
+    lineSpacing: idtRaw.lineSpacing || currentData?.identitas?.lineSpacing || '1.5'
+  };
+
+  // 2. Identifikasi
+  const idRaw = data.identifikasi || {};
+  let profilLulusan = idRaw.profilLulusan || data.profilLulusan || data.inti?.profilPancasila || [];
+  if (typeof profilLulusan === 'string') {
+    profilLulusan = profilLulusan.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  if (!Array.isArray(profilLulusan) || profilLulusan.length === 0) {
+    profilLulusan = [
+      "Penalaran Kritis & Pemecahan Masalah",
+      "Kreativitas & Inovasi",
+      "Kolaborasi & Gotong Royong"
+    ];
+  }
+  const identifikasi = {
+    profilLulusan,
+    kompetensiAwal: idRaw.kompetensiAwal || data.kompetensiAwal || data.inti?.kompetensiAwal || currentData?.identifikasi?.kompetensiAwal || '',
+    pemetaanKebutuhan: idRaw.pemetaanKebutuhan || data.pemetaanKebutuhan || data.inti?.pemetaanKebutuhan || currentData?.identifikasi?.pemetaanKebutuhan || ''
+  };
+
+  // 3. Desain Pembelajaran
+  const dpRaw = data.desainPembelajaran || data.desain_pembelajaran || {};
+  const desainPembelajaran = {
+    capaianPembelajaran: dpRaw.capaianPembelajaran || data.capaianPembelajaran || data.inti?.capaianPembelajaran || currentData?.desainPembelajaran?.capaianPembelajaran || '',
+    tujuanPembelajaran: dpRaw.tujuanPembelajaran || data.tujuanPembelajaran || data.inti?.tujuanPembelajaran || currentData?.desainPembelajaran?.tujuanPembelajaran || '',
+    kktp: dpRaw.kktp || data.kktp || data.inti?.kktp || currentData?.desainPembelajaran?.kktp || '',
+    kategoriKetercapaian: dpRaw.kategoriKetercapaian || data.kategoriKetercapaian || data.inti?.kategoriKetercapaian || currentData?.desainPembelajaran?.kategoriKetercapaian || ''
+  };
+
+  // 4. Pedagogis Deep Learning
+  const pdlRaw = data.pedagogisDeepLearning || data.pedagogis || data.praktikPedagogis || {};
+  const pedagogisDeepLearning = {
+    mindfulLearning: pdlRaw.mindfulLearning || data.mindfulLearning || currentData?.pedagogisDeepLearning?.mindfulLearning || '',
+    meaningfulLearning: pdlRaw.meaningfulLearning || data.meaningfulLearning || currentData?.pedagogisDeepLearning?.meaningfulLearning || '',
+    joyfulLearning: pdlRaw.joyfulLearning || data.joyfulLearning || currentData?.pedagogisDeepLearning?.joyfulLearning || '',
+    modelPembelajaran: pdlRaw.modelPembelajaran || data.modelPembelajaran || data.inti?.modelPembelajaran || currentData?.pedagogisDeepLearning?.modelPembelajaran || 'Problem Based Learning (PBL) terintegrasi Deep Learning Cycle',
+    metodePembelajaran: pdlRaw.metodePembelajaran || data.metodePembelajaran || data.inti?.metodePembelajaran || currentData?.pedagogisDeepLearning?.metodePembelajaran || 'Diskusi kelompok kolaboratif, penyelidikan kontekstual, dan refleksi bermakna'
+  };
+
+  // 5 & 6. Media & Sarana
+  const msRaw = data.mediaSarana || data.media_sarana || {};
+  const mediaSarana = {
+    mediaPembelajaran: msRaw.mediaPembelajaran || data.mediaPembelajaran || data.inti?.mediaSaranaPrasarana || data.inti?.mediaPembelajaran || currentData?.mediaSarana?.mediaPembelajaran || '',
+    saranaPrasarana: msRaw.saranaPrasarana || data.saranaPrasarana || data.inti?.saranaPrasarana || currentData?.mediaSarana?.saranaPrasarana || ''
+  };
+
+  // 7 & 8. Pemahaman & Pemantik
+  const ppRaw = data.pemahamanPemantik || data.pemahaman_pemantik || {};
+  const pemahamanPemantik = {
+    pemahamanBermakna: ppRaw.pemahamanBermakna || data.pemahamanBermakna || data.inti?.pemahamanBermakna || currentData?.pemahamanPemantik?.pemahamanBermakna || '',
+    pertanyaanPemantik: ppRaw.pertanyaanPemantik || data.pertanyaanPemantik || data.inti?.pertanyaanPemantik || currentData?.pemahamanPemantik?.pertanyaanPemantik || ''
+  };
+
+  // Komponen Inti (Format Standar)
+  const intiRaw = data.inti || {};
+  let profilPancasila = intiRaw.profilPancasila || data.profilPancasila || identifikasi.profilLulusan || [];
+  if (typeof profilPancasila === 'string') {
+    profilPancasila = profilPancasila.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  const inti = {
+    profilPancasila,
+    modelPembelajaran: intiRaw.modelPembelajaran || pedagogisDeepLearning.modelPembelajaran,
+    metodePembelajaran: intiRaw.metodePembelajaran || pedagogisDeepLearning.metodePembelajaran,
+    mediaSaranaPrasarana: intiRaw.mediaSaranaPrasarana || `${mediaSarana.mediaPembelajaran} ${mediaSarana.saranaPrasarana}`.trim(),
+    capaianPembelajaran: intiRaw.capaianPembelajaran || desainPembelajaran.capaianPembelajaran,
+    tujuanPembelajaran: intiRaw.tujuanPembelajaran || desainPembelajaran.tujuanPembelajaran,
+    pemahamanBermakna: intiRaw.pemahamanBermakna || pemahamanPemantik.pemahamanBermakna,
+    pertanyaanPemantik: intiRaw.pertanyaanPemantik || pemahamanPemantik.pertanyaanPemantik
+  };
+
+  // 9. Materi & Referensi
+  const mrRaw = data.materiReferensi || data.materi_referensi || {};
+  const materiReferensi = {
+    materi: mrRaw.materi || data.materi || currentData?.materiReferensi?.materi || '',
+    referensi: mrRaw.referensi || data.referensi || currentData?.materiReferensi?.referensi || ''
+  };
+
+  // 10. Langkah-langkah Pembelajaran
+  const lkRaw = data.langkah || data.langkah_pembelajaran || data.langkahPembelajaran || {};
+  const normalizeLangkahPhase = (phaseData, defaultDuration, fallbackData) => {
+    if (!phaseData && fallbackData) return fallbackData;
+    if (!phaseData) return { kegiatan: '', durasi: defaultDuration };
+    if (typeof phaseData === 'string') {
+      return { kegiatan: phaseData, durasi: defaultDuration };
+    }
+    return {
+      kegiatan: phaseData.kegiatan || phaseData.deskripsi || phaseData.aktivitas || fallbackData?.kegiatan || '',
+      durasi: String(phaseData.durasi || defaultDuration)
+    };
+  };
+
+  const langkah = {
+    pendahuluan: normalizeLangkahPhase(lkRaw.pendahuluan, '15', currentData?.langkah?.pendahuluan),
+    inti: normalizeLangkahPhase(lkRaw.inti, '60', currentData?.langkah?.inti),
+    penutup: normalizeLangkahPhase(lkRaw.penutup, '15', currentData?.langkah?.penutup)
+  };
+
+  // 11. Lampiran & Pengesahan
+  const lpRaw = data.lampiran || {};
+  const lampiran = {
+    lkpd: lpRaw.lkpd || data.lkpd || currentData?.lampiran?.lkpd || '',
+    asesmen: lpRaw.asesmen || data.asesmen || currentData?.lampiran?.asesmen || '',
+    kepalaSekolahNama: lpRaw.kepalaSekolahNama || currentData?.lampiran?.kepalaSekolahNama || '',
+    kepalaSekolahNip: lpRaw.kepalaSekolahNip || currentData?.lampiran?.kepalaSekolahNip || '',
+    guruMapelNama: lpRaw.guruMapelNama || identitas.penyusun || currentData?.lampiran?.guruMapelNama || '',
+    guruMapelNip: lpRaw.guruMapelNip || currentData?.lampiran?.guruMapelNip || '',
+    tanggalPengesahan: lpRaw.tanggalPengesahan || currentData?.lampiran?.tanggalPengesahan || getIndonesianDate()
+  };
+
+  return {
+    formatType: targetFormat,
+    identitas,
+    identifikasi,
+    desainPembelajaran,
+    pedagogisDeepLearning,
+    mediaSarana,
+    pemahamanPemantik,
+    inti,
+    materiReferensi,
+    langkah,
+    lampiran
+  };
+}
 
 // Helper: Bulletproof JSON Parser with Self-Healing
 function parseAiJsonResponse(rawText) {
@@ -253,17 +467,43 @@ const MGenAiModal = ({ onClose, onGenerate, currentData }) => {
     setIsLoading(true);
 
     try {
-      const contextPrompt = `${deepLearningSystemPrompt}
+      const isExplicitRevision = /hanya (revisi|ubah|perbaiki|ganti)|revisi bagian|ubah bagian|hanya pada bagian/i.test(prompt);
 
-Target Format yang diinginkan: ${targetFormat === 'deep_learning' ? 'MODUL DEEP LEARNING (10 KERANGKA)' : 'MODUL KURIKULUM MERDEKA STANDAR'}
+      let contextPrompt = '';
+      if (targetFormat === 'deep_learning') {
+        contextPrompt = `${deepLearningSystemPrompt}\n\n`;
+      } else {
+        contextPrompt = `${standarSystemPrompt}\n\n`;
+      }
 
-=== DATA MODUL SAAT INI ===
-${JSON.stringify(currentData, null, 2)}
-===========================
+      if (isExplicitRevision) {
+        contextPrompt += `=== MODE REVISI PARSIAL ===\nPengguna secara spesifik meminta revisi pada bagian tertentu saja.\nPertahankan data bagian lain yang tidak diminta diubah sama seperti data saat ini.\n=== DATA MODUL SAAT INI ===\n${JSON.stringify(currentData, null, 2)}\n===========================\n\nInstruksi Revisi Pengguna: ${prompt}`;
+      } else {
+        const existingIdentitasHint = currentData?.identitas?.penyusun || currentData?.identitas?.instansi 
+          ? `(Gunakan Nama Guru: "${currentData.identitas.penyusun || 'Nama Guru'}", Sekolah: "${currentData.identitas.instansi || 'Nama Sekolah'}")`
+          : '';
 
-ATURAN REVISI: Jika instruksi pengguna hanya meminta revisi bagian tertentu (misal: "perbaiki Capaian Pembelajaran dan KKTP"), Anda WAJIB mengembalikan seluruh kunci JSON lain sama persis seperti Data Modul Saat Ini (jangan dikosongkan). Hanya ubah bagian yang diminta.
+        contextPrompt += `=== PERINTAH GENERATE MODUL LENGKAP ===
+PERINGATAN SANGAT PENTING:
+Pengguna meminta Anda membuat MODUL AJAR LENGKAP SECARA TUNTAS.
+Anda WAJIB MENGISI SELURUH BAGIAN DARI AWAL SAMPAI AKHIR secara mendalam dan padat!
+DILARANG KERAS HANYA MENGISI BAGIAN IDENTITAS!
+Bagian yang WAJIB diisi penuh:
+1. Identitas Lengkap ${existingIdentitasHint}
+2. Identifikasi / Profil Lulusan / Profil Pancasila & Kompetensi Awal & Diferensiasi
+3. Desain Pembelajaran (Capaian Pembelajaran, Tujuan Pembelajaran terukur ABCD, KKTP, Kategori Ketercapaian Tabel Interval 4 Baris)
+4. Pedagogis / Model Pembelajaran & Metode Pembelajaran
+5. Media Pembelajaran & Sarana Prasarana
+6. Pemahaman Bermakna & Pertanyaan Pemantik HOTS
+7. Materi Pembelajaran (Ringkasan materi inti mendalam) & Referensi Pustaka
+8. Langkah Pembelajaran (Pendahuluan, Inti, Penutup beserta rincian menit)
+9. Lampiran (LKPD lengkap siap pakai untuk siswa, Instrumen & Rubrik Asesmen lengkap, dan Pengesahan)
+
+DILARANG KERAS MENGOSONGKAN BAGIAN APAPUN ATAU MENGGUNAKAN TANDA TITIK-TITIK '...'.
+Kembalikan seluruh kunci JSON terisi lengkap dan mendalam!
 
 Instruksi Pengguna: ${prompt}`;
+      }
 
       let parts = [{ text: contextPrompt }];
       if (attachedFile) {
@@ -302,59 +542,10 @@ Instruksi Pengguna: ${prompt}`;
       // Self-healing & robust JSON Parser
       let data = parseAiJsonResponse(text);
       
-      // Fallback if wrapped inside another key
-      if (data.modul_ajar && !data.identitas) {
-        data = data.modul_ajar;
-      }
-      
-      const finalData = {
-        formatType: targetFormat,
-        identitas: {
-          ...data.identitas,
-          fontFamily: data.identitas?.fontFamily || currentData?.identitas?.fontFamily || 'Poppins',
-          fontSize: data.identitas?.fontSize || currentData?.identitas?.fontSize || '11pt',
-          lineSpacing: data.identitas?.lineSpacing || currentData?.identitas?.lineSpacing || '1.5'
-        },
-        identifikasi: data.identifikasi || {
-          profilLulusan: data.inti?.profilPancasila || [],
-          kompetensiAwal: data.inti?.kompetensiAwal || '',
-          pemetaanKebutuhan: data.inti?.pemetaanKebutuhan || ''
-        },
-        desainPembelajaran: data.desainPembelajaran || {
-          capaianPembelajaran: data.inti?.capaianPembelajaran || '',
-          tujuanPembelajaran: data.inti?.tujuanPembelajaran || '',
-          kktp: data.inti?.kktp || '',
-          kategoriKetercapaian: data.inti?.kategoriKetercapaian || ''
-        },
-        pedagogisDeepLearning: data.pedagogisDeepLearning || {
-          mindfulLearning: data.inti?.mindfulLearning || '',
-          meaningfulLearning: data.inti?.meaningfulLearning || '',
-          joyfulLearning: data.inti?.joyfulLearning || '',
-          modelPembelajaran: data.inti?.modelPembelajaran || '',
-          metodePembelajaran: data.inti?.metodePembelajaran || ''
-        },
-        mediaSarana: data.mediaSarana || {
-          mediaPembelajaran: data.inti?.mediaPembelajaran || data.inti?.mediaSaranaPrasarana || '',
-          saranaPrasarana: data.inti?.saranaPrasarana || ''
-        },
-        pemahamanPemantik: data.pemahamanPemantik || {
-          pemahamanBermakna: data.inti?.pemahamanBermakna || '',
-          pertanyaanPemantik: data.inti?.pertanyaanPemantik || ''
-        },
-        inti: data.inti || {
-          capaianPembelajaran: data.desainPembelajaran?.capaianPembelajaran || '',
-          tujuanPembelajaran: data.desainPembelajaran?.tujuanPembelajaran || '',
-          pemahamanBermakna: data.pemahamanPemantik?.pemahamanBermakna || '',
-          pertanyaanPemantik: data.pemahamanPemantik?.pertanyaanPemantik || '',
-          modelPembelajaran: data.pedagogisDeepLearning?.modelPembelajaran || '',
-          metodePembelajaran: data.pedagogisDeepLearning?.metodePembelajaran || ''
-        },
-        materiReferensi: data.materiReferensi || data.materi_referensi || {},
-        langkah: data.langkah || data.langkah_pembelajaran || {},
-        lampiran: data.lampiran || {}
-      };
+      // Normalize complete response
+      const finalData = normalizeAiResponse(data, targetFormat, currentData);
 
-      if (Object.keys(finalData.identitas).length > 0) {
+      if (finalData && Object.keys(finalData.identitas).length > 0) {
         onGenerate(finalData);
         onClose();
       } else {

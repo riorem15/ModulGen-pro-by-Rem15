@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyle } from '@tiptap/extension-text-style';
@@ -9,7 +9,6 @@ import { TableCell } from '@tiptap/extension-table-cell';
 import { TableHeader } from '@tiptap/extension-table-header';
 import ImageResize from 'tiptap-extension-resize-image';
 import { TextAlign } from '@tiptap/extension-text-align';
-import { Underline } from '@tiptap/extension-underline';
 import { ListItem } from '@tiptap/extension-list-item';
 import { Color } from '@tiptap/extension-color';
 import { 
@@ -86,15 +85,12 @@ const MenuBar = ({ editor }) => {
 };
 
 const Editor = ({ value, onChange, placeholder }) => {
-  // ImageResize replaces CustomImage and provides drag handles
-
   const editor = useEditor({
     extensions: [
       StarterKit,
       TextStyle,
       Color,
       FontFamily.configure({ types: ['textStyle'] }),
-      Underline,
       TextAlign.configure({
         types: ['heading', 'paragraph', 'image'],
         alignments: ['left', 'center', 'right', 'justify'],
@@ -105,11 +101,21 @@ const Editor = ({ value, onChange, placeholder }) => {
       TableCell,
       ImageResize.configure({ allowBase64: true }),
     ],
-    content: value,
+    content: value || '',
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
   });
+
+  // Synchronize external value updates (e.g. from AI Generation or Reset) into Tiptap
+  useEffect(() => {
+    if (editor && !editor.isDestroyed && value !== undefined) {
+      const currentHTML = editor.getHTML();
+      if ((value || '') !== currentHTML) {
+        editor.commands.setContent(value || '', false);
+      }
+    }
+  }, [value, editor]);
 
   return (
     <div className="editor-container" style={{ position: 'relative' }}>

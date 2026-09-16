@@ -50,7 +50,7 @@ const TOUR_STEPS = [
     targetId: 'tour-btn-preview',
     title: '4. Pratinjau & Ekspor Word / PDF',
     subtitle: 'Layout Fleksibel & Tema Warna Menarik',
-    description: 'Pratinjau dokumen dengan pilihan Format Kotak Modern atau Format Tabel Matriks RPP, sesuaikan tema warna tabel (Hijau Zamrud, Biru, dll.), dan unduh instan dalam format Word (.doc) atau PDF siap cetak!',
+    description: 'Pratinjau dokumen dengan pilihan Format Kotak Modern atau Format Tabel Matriks RPP, sesuaikan tema warna tabel (Hijau Zamrud, Biru, dll.), dan unduh instan dalam format Word (.docx) atau PDF siap cetak!',
     icon: <Download size={24} color="#2563EB" />,
     badge: 'Ekspor Dokumen',
     position: 'bottom-left'
@@ -196,7 +196,7 @@ const TutorialModal = ({ isOpen, onClose, onNavigateTab }) => {
                 <Download size={18} />
               </div>
               <div className="feature-text">
-                <strong>Ekspor Word (.doc) & PDF Cepat</strong>
+                <strong>Ekspor Word (.docx) & PDF Cepat</strong>
                 <span>Siap cetak dengan pilihan layout kotak & tabel matriks RPP.</span>
               </div>
             </div>
